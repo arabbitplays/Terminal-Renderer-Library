@@ -48,7 +48,11 @@ namespace TerminalRenderer
         {
             return !(*this == other);
         }
+
+        static const IVec2 Zero;
     };
+
+    inline const IVec2 IVec2::Zero{};
 
     constexpr IVec2 operator*(int32_t scalar, const IVec2& vec)
     {

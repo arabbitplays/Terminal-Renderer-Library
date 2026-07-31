@@ -22,12 +22,17 @@ lib = shared_library(
     install : true,
 )
 
+renderer_dep = declare_dependency(
+    link_with: lib,
+    include_directories: incdirs,
+)
+
+meson.override_dependency('terminal_renderer_lib', renderer_dep)
+
 example = executable(
     'TerminalRendererExample',
     sources: ['example/main.cpp'],
-    link_with: [
-        lib
-    ],
+    dependencies: [renderer_dep],
 )
 
 install_subdir(
@@ -43,10 +48,3 @@ pkg.generate(
     description: 'A simple cpp terminal rendering library',
     version: meson.project_version()
 )
-
-renderer_dep = declare_dependency(
-    link_with: lib,
-    include_directories: incdirs,
-)
-
-meson.override_dependency('terminal_renderer_lib', renderer_dep)
