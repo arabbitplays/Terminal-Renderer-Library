@@ -1,6 +1,6 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_LAYOUTINFO_HPP
 #define TERMINAL_RENDERER_LIBRARY_LAYOUTINFO_HPP
-#include <terminal_renderer/core/IVec2.h>
+#include <terminal_renderer/core/IVec2.hpp>
 
 namespace TerminalRenderer
 {

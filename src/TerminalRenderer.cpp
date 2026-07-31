@@ -1,6 +1,8 @@
 #include <iostream>
 #include <terminal_renderer/TerminalRenderer.hpp>
 #include <thread>
+#include <terminal_renderer/nodes/container_node/ContainerNode.hpp>
+#include <terminal_renderer/nodes/container_node/ContainerNodeConfig.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <terminal_renderer/transport/StdOutTransport.hpp>
@@ -17,15 +19,18 @@ namespace TerminalRenderer
     void TerminalRenderer::render()
     {
         TargetActuator actuator = getTopLevelActuator();
-        auto text_config = std::make_shared<TextNodeConfig>();
-        auto node = std::make_shared<TextNode>(text_config);
+        auto text_config = std::make_shared<TextNodeConfig>("", 0, 0);
+        auto text_node = std::make_shared<TextNode>(text_config);
+
+        auto container_config = std::make_shared<ContainerNodeConfig>(text_node, BorderCharSet::LightBorderCharSet, IVec2{2, 1}, true, IVec2{2, 1});
+        auto container_node = std::make_shared<ContainerNode>(container_config);
         for (int i = 0; ; ++i)
         {
             transport->pollEvents();
             std::string s = "streaming char " + std::to_string(i) + "\n";
             text_config->text = s;
 
-            node->render(actuator);
+            container_node->render(actuator);
 
             blitter.blit(render_target);
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));

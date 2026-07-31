@@ -1,6 +1,6 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_VIEWPORT_HPP
 #define TERMINAL_RENDERER_LIBRARY_VIEWPORT_HPP
-#include <terminal_renderer/core/IVec2.h>
+#include <terminal_renderer/core/IVec2.hpp>
 
 namespace TerminalRenderer
 {

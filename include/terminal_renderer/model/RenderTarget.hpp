@@ -2,7 +2,7 @@
 #define TERMINAL_RENDERER_LIBRARY_RENDERTARGET_HPP
 #include <memory>
 #include <vector>
-#include <terminal_renderer/core/IVec2.h>
+#include <terminal_renderer/core/IVec2.hpp>
 #include <terminal_renderer/model/Cell.hpp>
 
 namespace TerminalRenderer

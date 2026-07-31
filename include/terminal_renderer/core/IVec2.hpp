@@ -17,7 +17,12 @@ namespace TerminalRenderer
 
         constexpr IVec2 operator+(const IVec2& other) const
         {
-            return IVec2(x + other.x, y + other.y);
+            return {x + other.x, y + other.y};
+        }
+
+        constexpr IVec2 operator-(const IVec2& other) const
+        {
+            return {x - other.x, y - other.y};
         }
 
         constexpr IVec2& operator+=(const IVec2& other)
@@ -29,7 +34,7 @@ namespace TerminalRenderer
 
         constexpr IVec2 operator*(int32_t scalar) const
         {
-            return IVec2(x * scalar, y * scalar);
+            return {x * scalar, y * scalar};
         }
 
         constexpr IVec2& operator*=(int32_t scalar)

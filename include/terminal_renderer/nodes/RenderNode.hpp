@@ -14,6 +14,8 @@ namespace TerminalRenderer
         virtual void render(TargetActuator& targetActuator) = 0;
         virtual LayoutInfo getLayoutInfo() = 0;
     };
+
+    typedef std::shared_ptr<RenderNode> RenderNodeHandle;
 }
 
 #endif //TERMINAL_RENDERER_LIBRARY_NODE_HPP
