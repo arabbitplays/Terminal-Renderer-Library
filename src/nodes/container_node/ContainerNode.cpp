@@ -1,8 +1,17 @@
 #include <terminal_renderer/nodes/container_node/ContainerNode.hpp>
 
+#include <utility>
+
 namespace TerminalRenderer
 {
-    ContainerNode::ContainerNode(const std::shared_ptr<ContainerNodeConfig>& config) : RenderNode(), config(config)
+    ContainerNode::ContainerNode(BorderCharSet border_char_set,
+                                 IVec2 margin,
+                                 bool draw_border,
+                                 IVec2 padding)
+        : border_char_set(std::move(border_char_set)),
+          margin(margin),
+          draw_border(draw_border),
+          padding(padding)
     {
     }
 
@@ -16,13 +25,13 @@ namespace TerminalRenderer
             return;
         }
 
-        if (!config->draw_border && config->margin == IVec2::Zero && config->padding == IVec2::Zero)
+        if (!draw_border && margin == IVec2::Zero && padding == IVec2::Zero)
         {
             renderChild(targetActuator);
             return;
         }
 
-        if (config->draw_border)
+        if (draw_border)
         {
             drawBorder(targetActuator);
         }
@@ -35,15 +44,20 @@ namespace TerminalRenderer
 
     LayoutInfo ContainerNode::getLayoutInfo()
     {
-        LayoutInfo childLayoutInfo = config->child != nullptr ? config->child->getLayoutInfo() : LayoutInfo();
+        LayoutInfo childLayoutInfo = child != nullptr ? child->getLayoutInfo() : LayoutInfo();
         childLayoutInfo.requestedSize += 2 * getContentOffset();
         return childLayoutInfo;
     }
 
+    void ContainerNode::setChild(RenderNodeHandle child)
+    {
+        this->child = std::move(child);
+    }
+
     void ContainerNode::drawBorder(const TargetActuator& targetActuator) const
     {
-        IVec2 start = config->margin;
-        IVec2 extent = targetActuator.getExtent() - 2 * config->margin;
+        IVec2 start = margin;
+        IVec2 extent = targetActuator.getExtent() - 2 * margin;
 
         if (extent.x < 2 || extent.y < 2)
         {
@@ -52,23 +66,23 @@ namespace TerminalRenderer
 
         Cell cell{0, 0 , 0};
 
-        cell.c = config->border_char_set.top_left;
+        cell.c = border_char_set.top_left;
         targetActuator.setCell(start, cell);
-        cell.c = config->border_char_set.top_right;
+        cell.c = border_char_set.top_right;
         targetActuator.setCell(start + IVec2{extent.x - 1, 0}, cell);
-        cell.c = config->border_char_set.bottom_left;
+        cell.c = border_char_set.bottom_left;
         targetActuator.setCell(start + IVec2{0, extent.y - 1}, cell);
-        cell.c = config->border_char_set.bottom_right;
+        cell.c = border_char_set.bottom_right;
         targetActuator.setCell(start + IVec2{extent.x - 1, extent.y - 1}, cell);
 
-        cell.c = config->border_char_set.horizontal;
+        cell.c = border_char_set.horizontal;
         for (int32_t i = 1; i < extent.x - 1; ++i)
         {
             targetActuator.setCell({start.x + i, start.y}, cell);
             targetActuator.setCell({start.x + i, start.y + extent.y - 1}, cell);
         }
 
-        cell.c = config->border_char_set.vertical;
+        cell.c = border_char_set.vertical;
         for (int32_t i = 1; i < extent.y - 1; ++i)
         {
             targetActuator.setCell({start.x,                start.y + i}, cell);
@@ -78,17 +92,17 @@ namespace TerminalRenderer
 
     void ContainerNode::renderChild(TargetActuator& targetActuator) const
     {
-        if (config->child == nullptr)
+        if (child == nullptr)
         {
             return;
         }
-        config->child->render(targetActuator);
+        child->render(targetActuator);
     }
 
     IVec2 ContainerNode::getContentOffset() const
     {
-        IVec2 content_offset = config->margin + config->padding;
-        if (config->draw_border)
+        IVec2 content_offset = margin + padding;
+        if (draw_border)
         {
             content_offset += IVec2{1, 1};
         }

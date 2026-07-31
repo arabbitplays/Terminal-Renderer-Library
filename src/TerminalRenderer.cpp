@@ -1,8 +1,8 @@
 #include <iostream>
 #include <terminal_renderer/TerminalRenderer.hpp>
 #include <thread>
+#include <terminal_renderer/nodes/NodeFactory.hpp>
 #include <terminal_renderer/nodes/container_node/ContainerNode.hpp>
-#include <terminal_renderer/nodes/container_node/ContainerNodeConfig.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <terminal_renderer/transport/StdOutTransport.hpp>
@@ -18,17 +18,16 @@ namespace TerminalRenderer
 
     void TerminalRenderer::render()
     {
-        TargetActuator actuator = getTopLevelActuator();
-        auto text_config = std::make_shared<TextNodeConfig>("", 0, 0);
-        auto text_node = std::make_shared<TextNode>(text_config);
+        NodeFactory factory;
+        auto text_node = factory.createText("");
+        auto container_node = factory.createRoundedBorder(1, 1);
+        container_node->setChild(text_node);
 
-        auto container_config = std::make_shared<ContainerNodeConfig>(text_node, BorderCharSet::LightBorderCharSet, IVec2{2, 1}, true, IVec2{2, 1});
-        auto container_node = std::make_shared<ContainerNode>(container_config);
+        TargetActuator actuator = getTopLevelActuator();
         for (int i = 0; ; ++i)
         {
             transport->pollEvents();
-            std::string s = "streaming char " + std::to_string(i) + "\n";
-            text_config->text = s;
+            text_node->text = "streaming char " + std::to_string(i) + "\n";
 
             container_node->render(actuator);
 
