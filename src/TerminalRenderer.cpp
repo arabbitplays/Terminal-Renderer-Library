@@ -1,6 +1,7 @@
 #include <iostream>
 #include <terminal_renderer/TerminalRenderer.hpp>
 #include <thread>
+#include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <terminal_renderer/transport/StdOutTransport.hpp>
 
@@ -16,14 +17,16 @@ namespace TerminalRenderer
     void TerminalRenderer::render()
     {
         TargetActuator actuator = getTopLevelActuator();
+        auto text_config = std::make_shared<TextNodeConfig>();
+        auto node = std::make_shared<TextNode>(text_config);
         for (int i = 0; ; ++i)
         {
             transport->pollEvents();
             std::string s = "streaming char " + std::to_string(i) + "\n";
-            actuator.setCell(IVec2::Zero, {'X', 0, 0});
-            actuator.setCell({0, render_target->getExtent().y - 1}, {'X', 0, 0});
-            actuator.setCell({render_target->getExtent().x - 1, 0}, {'X', 0, 0});
-            actuator.setCell({render_target->getExtent().x - 1, render_target->getExtent().y - 1}, {'X', 0, 0});
+            text_config->text = s;
+
+            node->render(actuator);
+
             blitter.blit(render_target);
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }

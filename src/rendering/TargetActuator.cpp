@@ -29,6 +29,11 @@ namespace TerminalRenderer
         }
     }
 
+    IVec2 TargetActuator::getExtent() const
+    {
+        return viewport.extent;
+    }
+
     IVec2 TargetActuator::getGlobalPos(const IVec2 local_pos) const
     {
         assert(local_pos.x >= 0 && local_pos.x < viewport.extent.x && local_pos.y >= 0 && local_pos.y < viewport.extent.y);

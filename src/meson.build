@@ -2,6 +2,7 @@
 
 subdir('core')
 subdir('model')
+subdir('nodes')
 subdir('rendering')
 subdir('transport')
 

@@ -1,0 +1,10 @@
+#ifndef TERMINAL_RENDERER_LIBRARY_NODECONFIG_HPP
+#define TERMINAL_RENDERER_LIBRARY_NODECONFIG_HPP
+
+namespace TerminalRenderer
+{
+    struct NodeConfig {
+    };
+}
+
+#endif //TERMINAL_RENDERER_LIBRARY_NODECONFIG_HPP

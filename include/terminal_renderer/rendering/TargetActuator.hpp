@@ -11,9 +11,11 @@ namespace TerminalRenderer
         TargetActuator(RenderTargetHandle  render_target, Viewport viewport);
 
         void setCell(IVec2 pos, const Cell& cell) const;
-        Cell getCell(IVec2 pos) const;
+        [[nodiscard]] Cell getCell(IVec2 pos) const;
 
         void writeText(IVec2 pos, const std::string& text, Cell cell) const;
+
+        [[nodiscard]] IVec2 getExtent() const;
     private:
         [[nodiscard]] IVec2 getGlobalPos(IVec2 local_pos) const;
 
