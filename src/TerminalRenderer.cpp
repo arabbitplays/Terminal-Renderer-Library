@@ -1,17 +1,14 @@
 #include <iostream>
 #include <terminal_renderer/TerminalRenderer.hpp>
 #include <thread>
-#include <terminal_renderer/actuator/TargetActuator.hpp>
+#include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <terminal_renderer/transport/StdOutTransport.hpp>
 
 namespace TerminalRenderer
 {
-    TerminalRenderer::TerminalRenderer() : transport(std::make_shared<StdOutTransport>())
-    {
-        init();
-    }
+    TerminalRenderer::TerminalRenderer() : TerminalRenderer(std::make_shared<StdOutTransport>()) { }
 
-    TerminalRenderer::TerminalRenderer(const TransportHandle& transport) : transport(transport)
+    TerminalRenderer::TerminalRenderer(const TransportHandle& transport) : transport(transport), blitter(transport)
     {
         init();
     }
@@ -23,9 +20,12 @@ namespace TerminalRenderer
         {
             transport->pollEvents();
             std::string s = "streaming char " + std::to_string(i) + "\n";
-            actuator.writeText(IVec2::Zero, s, {});
-            //transport->send(s);
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            actuator.setCell(IVec2::Zero, {'X', 0, 0});
+            actuator.setCell({0, render_target->getExtent().y - 1}, {'X', 0, 0});
+            actuator.setCell({render_target->getExtent().x - 1, 0}, {'X', 0, 0});
+            actuator.setCell({render_target->getExtent().x - 1, render_target->getExtent().y - 1}, {'X', 0, 0});
+            blitter.blit(render_target);
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         }
     }
 

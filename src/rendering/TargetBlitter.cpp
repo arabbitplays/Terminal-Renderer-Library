@@ -1,0 +1,84 @@
+#include <format>
+#include <terminal_renderer/rendering/TargetBlitter.hpp>
+
+namespace TerminalRenderer
+{
+    TargetBlitter::TargetBlitter(const TransportHandle& transport) : transport(transport)
+    {
+    }
+
+    void TargetBlitter::blit(const RenderTargetHandle& target)
+    {
+        clear();
+        setCursorVisibility(false);
+        IVec2 extent = target->getExtent();
+
+        std::string framebuffer;
+        for (int32_t y = 0; y < extent.y; ++y)
+        {
+            for (int32_t x = 0; x < extent.x; ++x)
+            {
+                Cell cell = target->getCell({x, y});
+                if (cell.c != 0)
+                {
+                    framebuffer += getCursorMoveString({x, y});
+                    framebuffer += toUtf8(cell.c);
+                }
+            }
+        }
+        transport->send(framebuffer);
+        setCursorVisibility(true);
+    }
+
+    void TargetBlitter::clear() const
+    {
+        transport->send("\x1b[2J");
+    }
+
+    std::string TargetBlitter::getCursorMoveString(IVec2 pos) const
+    {
+        return std::format("\x1b[{};{}H", pos.y + 1, pos.x + 1);
+    }
+
+    void TargetBlitter::setCursorVisibility(bool visible)
+    {
+        if (visible)
+        {
+            transport->send("\x1b[?25h");
+        }
+        else
+        {
+            transport->send("\x1b[?25l");
+        }
+    }
+
+    std::string TargetBlitter::toUtf8(char32_t cp)
+    {
+        std::string out;
+        uint32_t c = cp;
+        if (c <= 0x7F)
+        {
+            out += static_cast<char>(c);
+        }
+        else if (c <= 0x7FF)
+        {
+            out += static_cast<char>(0xC0 | (c >> 6));
+            out += static_cast<char>(0x80 | (c & 0x3F));
+        }
+        else if (c <= 0xFFFF)
+        {
+            out += static_cast<char>(0xE0 | (c >> 12));
+            out += static_cast<char>(0x80 | ((c >> 6) & 0x3F));
+            out += static_cast<char>(0x80 | (c & 0x3F));
+        }
+        else
+        {
+            // up to 0x10FFFF
+            out += static_cast<char>(0xF0 | (c >> 18));
+            out += static_cast<char>(0x80 | ((c >> 12) & 0x3F));
+            out += static_cast<char>(0x80 | ((c >> 6) & 0x3F));
+            out += static_cast<char>(0x80 | (c & 0x3F));
+        }
+        return out;
+    }
+} // TerminalRenderer

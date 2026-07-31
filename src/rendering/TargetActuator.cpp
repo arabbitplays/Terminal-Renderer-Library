@@ -1,5 +1,5 @@
 #include <cassert>
-#include <terminal_renderer/actuator/TargetActuator.hpp>
+#include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <utility>
 
 namespace TerminalRenderer

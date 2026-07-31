@@ -21,7 +21,7 @@ namespace TerminalRenderer
 
     void StdOutTransport::send(const std::string& data)
     {
-        std::cout << data;
+        std::cout << data << std::flush;
     }
 
     Viewport StdOutTransport::getViewport()
