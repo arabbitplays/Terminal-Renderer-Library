@@ -1,6 +1,6 @@
 
 #include <memory>
-#include <include/terminal_renderer/TerminalRenderer.hpp>
+#include <terminal_renderer/TerminalRenderer.hpp>
 
 int main(int argc, char* argv[])
 {

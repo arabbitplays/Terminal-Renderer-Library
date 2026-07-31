@@ -17,7 +17,10 @@ namespace TerminalRenderer
 
         void render();
     private:
+        void init();
+        void initRenderTarget(const Viewport& vp);
         TransportHandle transport;
+        Viewport viewport;
     };
 
     typedef std::shared_ptr<TerminalRenderer> RendererHandle;
