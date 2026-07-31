@@ -22,6 +22,14 @@ lib = shared_library(
     install : true,
 )
 
+example = executable(
+    'TerminalRendererExample',
+    sources: ['example/main.cpp'],
+    link_with: [
+        lib
+    ],
+)
+
 install_subdir(
     'include/terminal_renderer',
     install_dir: get_option('includedir')
