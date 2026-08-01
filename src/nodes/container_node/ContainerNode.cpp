@@ -45,8 +45,11 @@ namespace TerminalRenderer
     LayoutInfo ContainerNode::getLayoutInfo()
     {
         LayoutInfo childLayoutInfo = child != nullptr ? child->getLayoutInfo() : LayoutInfo();
-        childLayoutInfo.requestedSize += 2 * getContentOffset();
-        return childLayoutInfo;
+        LayoutInfo layout_info;
+        layout_info.requestedSize = childLayoutInfo.requestedSize + 2 * getContentOffset();
+        layout_info.minimumSize = 2 * getContentOffset();
+        layout_info.scaling_mode = FLEXIBLE;
+        return layout_info;
     }
 
     void ContainerNode::setChild(RenderNodeHandle child)

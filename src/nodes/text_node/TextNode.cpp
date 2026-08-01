@@ -26,6 +26,8 @@ namespace TerminalRenderer
     {
         LayoutInfo layoutInfo;
         layoutInfo.requestedSize = { static_cast<int32_t>(text.size()), 1};
+        layoutInfo.minimumSize = {};
+        layoutInfo.scaling_mode = FLEXIBLE;
         return layoutInfo;
     }
 } // TerminalRenderer

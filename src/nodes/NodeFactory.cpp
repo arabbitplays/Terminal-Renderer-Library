@@ -1,6 +1,7 @@
 #include <terminal_renderer/nodes/NodeFactory.hpp>
 
 #include "terminal_renderer/nodes/container_node/ContainerNode.hpp"
+#include "terminal_renderer/nodes/layouts/HorizontalLayout.hpp"
 #include "terminal_renderer/nodes/text_node/TextNode.hpp"
 
 namespace TerminalRenderer
@@ -40,5 +41,10 @@ namespace TerminalRenderer
     std::shared_ptr<ContainerNode> NodeFactory::createRoundedBorder(uint32_t margin, uint32_t padding) const
     {
         return makeBorder(BorderCharSet::RoundedBorderCharSet, margin, padding);
+    }
+
+    std::shared_ptr<HorizontalLayout> NodeFactory::createHorizontalLayout() const
+    {
+        return std::make_shared<HorizontalLayout>();
     }
 } // TerminalRenderer

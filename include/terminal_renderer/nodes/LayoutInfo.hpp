@@ -4,9 +4,17 @@
 
 namespace TerminalRenderer
 {
+    enum ScalingMode
+    {
+        STATIC,
+        FLEXIBLE
+    };
+
     struct LayoutInfo
     {
         IVec2 requestedSize;
+        IVec2 minimumSize;
+        ScalingMode scaling_mode = FLEXIBLE;
     };
 }
 
