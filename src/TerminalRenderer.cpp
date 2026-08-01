@@ -3,7 +3,7 @@
 #include <thread>
 #include <terminal_renderer/nodes/builder/SceneBuilder.hpp>
 #include <terminal_renderer/nodes/container_node/BorderNode.hpp>
-#include <terminal_renderer/nodes/layouts/HorizontalLayout.hpp>
+#include <terminal_renderer/nodes/layouts/LayoutNode.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <terminal_renderer/transport/StdOutTransport.hpp>
@@ -22,14 +22,22 @@ namespace TerminalRenderer
     void TerminalRenderer::render()
     {
         SceneBuilder builder;
-        auto layout_node = builder.horizontalLayout()
+        auto layout_node = builder.verticalLayout()
             .addChild(builder.roundedBorder()
                 .setChild(builder.horizontalLayout()
                     .addChild(builder.dottedBorder().build())
                     .addChild(builder.doubleBorder().build())
                     .build())
                 .build())
-            .addChild(builder.heavyBorder().build())
+            .addChild(builder.horizontalLayout()
+                .addChild(builder.heavyBorder()
+                    .setChild(builder.verticalLayout()
+                        .addChild(builder.lightBorder().build())
+                        .addChild(builder.dottedBorder().build())
+                        .build())
+                    .build())
+                .addChild(builder.doubleBorder().build())
+                .build())
             .build();
 
         for (int i = 0; ; ++i)
@@ -40,7 +48,7 @@ namespace TerminalRenderer
             layout_node->render(actuator);
 
             blitter.blit(render_target);
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
     }
 

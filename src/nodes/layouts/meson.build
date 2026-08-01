@@ -2,5 +2,5 @@
 
 
 src += files(
-  'HorizontalLayout.cpp',
+  'LayoutNode.cpp',
 )

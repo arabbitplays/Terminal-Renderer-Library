@@ -2,10 +2,18 @@
 #define TERMINAL_RENDERER_LIBRARY_LAYOUTUTIL_HPP
 #include <cstdint>
 #include <vector>
+#include <terminal_renderer/core/IVec2.hpp>
+#include <terminal_renderer/model/Viewport.hpp>
 #include <terminal_renderer/nodes/LayoutInfo.hpp>
 
 namespace TerminalRenderer
 {
+    enum class Axis
+    {
+        Horizontal,
+        Vertical
+    };
+
     struct DistributionRequest
     {
         ScalingMode scaling_mode;
@@ -15,6 +23,26 @@ namespace TerminalRenderer
     class LayoutUtil
     {
     public:
+        static int32_t mainAxis(IVec2 v, Axis axis)
+        {
+            return axis == Axis::Horizontal ? v.x : v.y;
+        }
+
+        static int32_t crossAxis(IVec2 v, Axis axis)
+        {
+            return axis == Axis::Horizontal ? v.y : v.x;
+        }
+
+        static IVec2 makeVec(int32_t main, int32_t cross, Axis axis)
+        {
+            return axis == Axis::Horizontal ? IVec2{main, cross} : IVec2{cross, main};
+        }
+
+        static Viewport makeSlot(int32_t main_offset, int32_t main_size, int32_t cross_size, Axis axis)
+        {
+            return Viewport{makeVec(main_offset, 0, axis), makeVec(main_size, cross_size, axis)};
+        }
+
         static std::vector<int32_t> distribute(uint32_t total_size, std::vector<DistributionRequest> requests)
         {
             std::vector<int32_t> results(requests.size(), 0);

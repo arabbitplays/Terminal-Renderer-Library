@@ -12,7 +12,7 @@ namespace TerminalRenderer
 {
     class TextNode;
     class BorderNode;
-    class HorizontalLayout;
+    class LayoutNode;
 
     template <typename T>
     class LeafBuilder
@@ -78,7 +78,8 @@ namespace TerminalRenderer
         ContainerBuilder<BorderNode> dottedBorder(uint32_t margin = 0, uint32_t padding = 0) const;
         ContainerBuilder<BorderNode> roundedBorder(uint32_t margin = 0, uint32_t padding = 0) const;
 
-        GroupBuilder<HorizontalLayout> horizontalLayout() const;
+        GroupBuilder<LayoutNode> horizontalLayout() const;
+        GroupBuilder<LayoutNode> verticalLayout() const;
     };
 } // TerminalRenderer
 

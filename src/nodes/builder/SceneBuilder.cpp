@@ -1,7 +1,7 @@
 #include <terminal_renderer/nodes/builder/SceneBuilder.hpp>
 
 #include <terminal_renderer/nodes/container_node/BorderNode.hpp>
-#include <terminal_renderer/nodes/layouts/HorizontalLayout.hpp>
+#include <terminal_renderer/nodes/layouts/LayoutNode.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
 
 namespace TerminalRenderer
@@ -43,8 +43,13 @@ namespace TerminalRenderer
         return ContainerBuilder<BorderNode>{makeBorder(BorderCharSet::RoundedBorderCharSet, margin, padding)};
     }
 
-    GroupBuilder<HorizontalLayout> SceneBuilder::horizontalLayout() const
+    GroupBuilder<LayoutNode> SceneBuilder::horizontalLayout() const
     {
-        return GroupBuilder<HorizontalLayout>{std::make_shared<HorizontalLayout>()};
+        return GroupBuilder<LayoutNode>{std::make_shared<LayoutNode>(Axis::Horizontal)};
+    }
+
+    GroupBuilder<LayoutNode> SceneBuilder::verticalLayout() const
+    {
+        return GroupBuilder<LayoutNode>{std::make_shared<LayoutNode>(Axis::Vertical)};
     }
 } // TerminalRenderer
