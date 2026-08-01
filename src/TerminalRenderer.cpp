@@ -9,7 +9,9 @@
 
 namespace TerminalRenderer
 {
-    TerminalRenderer::TerminalRenderer() : TerminalRenderer(std::make_shared<StdOutTransport>()) { }
+    TerminalRenderer::TerminalRenderer() : TerminalRenderer(std::make_shared<StdOutTransport>())
+    {
+    }
 
     TerminalRenderer::TerminalRenderer(const TransportHandle& transport) : transport(transport), blitter(transport)
     {
@@ -23,16 +25,16 @@ namespace TerminalRenderer
         auto container_node = factory.createRoundedBorder(1, 1);
         container_node->setChild(text_node);
 
-        TargetActuator actuator = getTopLevelActuator();
         for (int i = 0; ; ++i)
         {
             transport->pollEvents();
+            TargetActuator actuator = getTopLevelActuator();
             text_node->text = "streaming char " + std::to_string(i) + "\n";
 
             container_node->render(actuator);
 
             blitter.blit(render_target);
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
     }
 
@@ -48,17 +50,11 @@ namespace TerminalRenderer
 
     void TerminalRenderer::initRenderTarget(const IVec2& extent)
     {
-        if (render_target == nullptr)
-        {
-            render_target = std::make_shared<RenderTarget>(extent);
-        } else
-        {
-            render_target->resize(extent);
-        }
+        render_target = std::make_shared<RenderTarget>(extent);
     }
 
     TargetActuator TerminalRenderer::getTopLevelActuator()
     {
-        return {render_target, { {0, 0}, render_target->getExtent()}};
+        return {render_target, {{0, 0}, render_target->getExtent()}};
     }
 }

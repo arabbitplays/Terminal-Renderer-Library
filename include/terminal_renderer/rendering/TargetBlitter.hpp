@@ -9,7 +9,7 @@ namespace TerminalRenderer
     {
     public:
         explicit TargetBlitter(const TransportHandle& transport);
-        void setupTerminal() const;
+        ~TargetBlitter();
 
         void blit(const RenderTargetHandle& target);
     private:
@@ -19,6 +19,7 @@ namespace TerminalRenderer
         std::string toUtf8(char32_t cp);
 
         TransportHandle transport;
+        RenderTargetHandle last_target;
     };
 } // TerminalRenderer
 

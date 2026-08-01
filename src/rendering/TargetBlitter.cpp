@@ -3,14 +3,25 @@
 
 namespace TerminalRenderer
 {
-    TargetBlitter::TargetBlitter(const TransportHandle& transport) : transport(transport)
+    TargetBlitter::TargetBlitter(const TransportHandle& transport)
+        : transport(transport), last_target(std::make_shared<RenderTarget>(IVec2::Zero))
     {
+        setCursorVisibility(false);
+    }
+
+    TargetBlitter::~TargetBlitter()
+    {
+        setCursorVisibility(true);
     }
 
     void TargetBlitter::blit(const RenderTargetHandle& target)
     {
-        clear();
-        setCursorVisibility(false);
+        if (last_target->getExtent() != target->getExtent())
+        {
+            last_target = std::make_shared<RenderTarget>(target->getExtent());
+            clear();
+        }
+
         IVec2 extent = target->getExtent();
 
         std::string framebuffer;
@@ -18,16 +29,18 @@ namespace TerminalRenderer
         {
             for (int32_t x = 0; x < extent.x; ++x)
             {
-                Cell cell = target->getCell({x, y});
-                if (cell.c != 0)
+                IVec2 pos{x, y};
+                Cell cell = target->getCell(pos);
+                if (cell != last_target->getCell(pos))
                 {
-                    framebuffer += getCursorMoveString({x, y});
+                    framebuffer += getCursorMoveString(pos);
                     framebuffer += toUtf8(cell.c);
+
+                    last_target->setCell(pos, cell);
                 }
             }
         }
         transport->send(framebuffer);
-        setCursorVisibility(true);
     }
 
     void TargetBlitter::clear() const
@@ -54,6 +67,11 @@ namespace TerminalRenderer
 
     std::string TargetBlitter::toUtf8(char32_t cp)
     {
+        if (cp == 0)
+        {
+            return " ";
+        }
+
         std::string out;
         uint32_t c = cp;
         if (c <= 0x7F)
