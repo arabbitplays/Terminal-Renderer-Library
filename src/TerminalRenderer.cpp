@@ -1,8 +1,8 @@
 #include <iostream>
 #include <terminal_renderer/TerminalRenderer.hpp>
 #include <thread>
-#include <terminal_renderer/nodes/NodeFactory.hpp>
-#include <terminal_renderer/nodes/container_node/ContainerNode.hpp>
+#include <terminal_renderer/nodes/builder/SceneBuilder.hpp>
+#include <terminal_renderer/nodes/container_node/BorderNode.hpp>
 #include <terminal_renderer/nodes/layouts/HorizontalLayout.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
@@ -21,25 +21,21 @@ namespace TerminalRenderer
 
     void TerminalRenderer::render()
     {
-        NodeFactory factory;
-        auto layout_node = factory.createHorizontalLayout();
-        auto container_node = factory.createRoundedBorder();
-        auto container_node2 = factory.createHeavyBorder();
-        layout_node->addChild(container_node);
-        layout_node->addChild(container_node2);
-
-        auto inner_layout_node = factory.createHorizontalLayout();
-        auto inner_container_node = factory.createDottedBorder();
-        auto inner_container_node2 = factory.createDoubleBorder();
-        inner_layout_node->addChild(inner_container_node);
-        inner_layout_node->addChild(inner_container_node2);
-        container_node->setChild(inner_layout_node);
+        SceneBuilder builder;
+        auto layout_node = builder.horizontalLayout()
+            .addChild(builder.roundedBorder()
+                .setChild(builder.horizontalLayout()
+                    .addChild(builder.dottedBorder().build())
+                    .addChild(builder.doubleBorder().build())
+                    .build())
+                .build())
+            .addChild(builder.heavyBorder().build())
+            .build();
 
         for (int i = 0; ; ++i)
         {
             transport->pollEvents();
             TargetActuator actuator = getTopLevelActuator();
-            //text_node->text = "streaming char " + std::to_string(i) + "\n";
 
             layout_node->render(actuator);
 

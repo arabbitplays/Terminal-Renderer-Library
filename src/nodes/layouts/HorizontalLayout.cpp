@@ -9,11 +9,6 @@ namespace TerminalRenderer
         return LayoutInfo{};
     }
 
-    void HorizontalLayout::addChild(RenderNodeHandle child)
-    {
-        children.push_back(child);
-    }
-
     void HorizontalLayout::render(TargetActuator& targetActuator)
     {
         IVec2 extent = targetActuator.getExtent();

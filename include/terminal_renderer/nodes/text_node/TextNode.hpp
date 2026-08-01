@@ -2,11 +2,11 @@
 #define TERMINAL_RENDERER_LIBRARY_TEXTNODE_HPP
 #include <cstdint>
 #include <string>
-#include <terminal_renderer/nodes/RenderNode.hpp>
+#include <terminal_renderer/nodes/LeafNode.hpp>
 
 namespace TerminalRenderer
 {
-    class TextNode : public RenderNode
+    class TextNode : public LeafNode
     {
     public:
         TextNode(std::string text, uint32_t fg_color, uint32_t bg_color);

@@ -1,13 +1,13 @@
-#include <terminal_renderer/nodes/container_node/ContainerNode.hpp>
+#include <terminal_renderer/nodes/container_node/BorderNode.hpp>
 
 #include <utility>
 
 namespace TerminalRenderer
 {
-    ContainerNode::ContainerNode(BorderCharSet border_char_set,
-                                 IVec2 margin,
-                                 bool draw_border,
-                                 IVec2 padding)
+    BorderNode::BorderNode(BorderCharSet border_char_set,
+                           IVec2 margin,
+                           bool draw_border,
+                           IVec2 padding)
         : border_char_set(std::move(border_char_set)),
           margin(margin),
           draw_border(draw_border),
@@ -15,7 +15,7 @@ namespace TerminalRenderer
     {
     }
 
-    void ContainerNode::render(TargetActuator& targetActuator)
+    void BorderNode::render(TargetActuator& targetActuator)
     {
         IVec2 extent = targetActuator.getExtent();
         IVec2 content_offset = getContentOffset();
@@ -42,7 +42,7 @@ namespace TerminalRenderer
         renderChild(innerActuator);
     }
 
-    LayoutInfo ContainerNode::getLayoutInfo()
+    LayoutInfo BorderNode::getLayoutInfo()
     {
         LayoutInfo childLayoutInfo = child != nullptr ? child->getLayoutInfo() : LayoutInfo();
         LayoutInfo layout_info;
@@ -52,12 +52,7 @@ namespace TerminalRenderer
         return layout_info;
     }
 
-    void ContainerNode::setChild(RenderNodeHandle child)
-    {
-        this->child = std::move(child);
-    }
-
-    void ContainerNode::drawBorder(const TargetActuator& targetActuator) const
+    void BorderNode::drawBorder(const TargetActuator& targetActuator) const
     {
         IVec2 start = margin;
         IVec2 extent = targetActuator.getExtent() - 2 * margin;
@@ -93,7 +88,7 @@ namespace TerminalRenderer
         }
     }
 
-    void ContainerNode::renderChild(TargetActuator& targetActuator) const
+    void BorderNode::renderChild(TargetActuator& targetActuator) const
     {
         if (child == nullptr)
         {
@@ -102,7 +97,7 @@ namespace TerminalRenderer
         child->render(targetActuator);
     }
 
-    IVec2 ContainerNode::getContentOffset() const
+    IVec2 BorderNode::getContentOffset() const
     {
         IVec2 content_offset = margin + padding;
         if (draw_border)
