@@ -1,25 +1,34 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_CELL_HPP
 #define TERMINAL_RENDERER_LIBRARY_CELL_HPP
-#include <cstdint>
+#include <optional>
+#include <terminal_renderer/model/color/Color.hpp>
 
 namespace TerminalRenderer
 {
     struct Cell
     {
         char32_t c;
-        uint32_t fg_color_idx;
-        uint32_t bg_color_idx;
+        std::optional<ColorHandle> fg_color;
+        std::optional<ColorHandle> bg_color;
 
         bool operator==(const Cell& other) const
         {
             return c == other.c
-                && fg_color_idx == other.fg_color_idx
-                && bg_color_idx == other.bg_color_idx;
+                && sameColor(fg_color, other.fg_color)
+                && sameColor(bg_color, other.bg_color);
         }
 
         bool operator!=(const Cell& other) const
         {
             return !(*this == other);
+        }
+
+    private:
+        static bool sameColor(const std::optional<ColorHandle>& a, const std::optional<ColorHandle>& b)
+        {
+            if (a.has_value() != b.has_value()) return false;
+            if (!a.has_value()) return true;
+            return (*a)->get256ColorIndex() == (*b)->get256ColorIndex();
         }
     };
 }

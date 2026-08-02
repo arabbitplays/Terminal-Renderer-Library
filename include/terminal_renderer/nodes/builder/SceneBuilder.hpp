@@ -2,8 +2,10 @@
 #define TERMINAL_RENDERER_LIBRARY_SCENEBUILDER_HPP
 #include <cstdint>
 #include <memory>
+#include <optional>
 #include <string>
 #include <utility>
+#include <terminal_renderer/model/color/StandardColor.hpp>
 #include <terminal_renderer/nodes/ContainerNode.hpp>
 #include <terminal_renderer/nodes/GroupNode.hpp>
 #include <terminal_renderer/nodes/LeafNode.hpp>
@@ -70,7 +72,7 @@ namespace TerminalRenderer
     class SceneBuilder
     {
     public:
-        LeafBuilder<TextNode> text(std::string text = "") const;
+        LeafBuilder<TextNode> text(std::string text = "", std::optional<ColorHandle> fg_color = std::nullopt, std::optional<ColorHandle> bg_color = std::nullopt) const;
 
         ContainerBuilder<BorderNode> lightBorder(uint32_t margin = 0, uint32_t padding = 0) const;
         ContainerBuilder<BorderNode> heavyBorder(uint32_t margin = 0, uint32_t padding = 0) const;

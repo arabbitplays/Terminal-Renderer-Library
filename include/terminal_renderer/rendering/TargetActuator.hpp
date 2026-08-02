@@ -7,7 +7,6 @@ namespace TerminalRenderer
 {
     class TargetActuator
     {
-        friend TargetActuator;
     public:
         TargetActuator(RenderTargetHandle render_target, Viewport viewport);
 

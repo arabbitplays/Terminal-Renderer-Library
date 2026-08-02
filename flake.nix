@@ -19,6 +19,8 @@
         default = pkgs.mkShell {
           packages = with pkgs; [];
 
+          hardeningDisable = [ "fortify" "fortify3" ];
+
           buildInputs = with pkgs; [
             meson
             ninja

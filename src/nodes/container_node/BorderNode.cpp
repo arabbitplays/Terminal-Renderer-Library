@@ -62,7 +62,7 @@ namespace TerminalRenderer
             return;
         }
 
-        Cell cell{0, 0 , 0};
+        Cell cell{0, std::nullopt, std::nullopt};
 
         cell.c = border_char_set.top_left;
         targetActuator.setCell(start, cell);

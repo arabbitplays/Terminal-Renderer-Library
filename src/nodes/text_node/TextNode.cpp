@@ -4,8 +4,8 @@
 
 namespace TerminalRenderer
 {
-    TextNode::TextNode(std::string text, uint32_t fg_color, uint32_t bg_color)
-        : text(std::move(text)), fg_color(fg_color), bg_color(bg_color)
+    TextNode::TextNode(std::string text, std::optional<ColorHandle> fg_color, std::optional<ColorHandle> bg_color)
+        : text(std::move(text)), fg_color(std::move(fg_color)), bg_color(std::move(bg_color))
     {
     }
 
