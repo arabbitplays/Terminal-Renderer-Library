@@ -1,4 +1,4 @@
-#include <terminal_renderer/nodes/builder/SceneBuilder.hpp>
+#include <terminal_renderer/builder/SceneBuilder.hpp>
 
 #include <terminal_renderer/nodes/container_node/BorderNode.hpp>
 #include <terminal_renderer/nodes/layouts/LayoutNode.hpp>

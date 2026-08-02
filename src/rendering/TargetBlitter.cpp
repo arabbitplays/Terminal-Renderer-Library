@@ -1,4 +1,5 @@
 #include <format>
+#include <terminal_renderer/rendering/AnsiCodeUtil.hpp>
 #include <terminal_renderer/rendering/TargetBlitter.hpp>
 
 namespace TerminalRenderer
@@ -34,13 +35,36 @@ namespace TerminalRenderer
                 if (cell != last_target->getCell(pos))
                 {
                     framebuffer += getCursorMoveString(pos);
-                    framebuffer += toUtf8(cell.c);
+                    framebuffer += getCellString(cell);
 
                     last_target->setCell(pos, cell);
                 }
             }
         }
         transport->send(framebuffer);
+    }
+
+    std::string TargetBlitter::getCellString(const Cell& cell)
+    {
+        std::string result;
+        if (cell.fg_color.has_value())
+        {
+            result += AnsiCodeUtil::toAnsiForegroundColorCode(cell.fg_color.value()->get256ColorIndex());
+        }
+
+        if (cell.bg_color.has_value())
+        {
+            result += AnsiCodeUtil::toAnsiBackgroundColorCode(cell.bg_color.value()->get256ColorIndex());
+        }
+
+        result += toUtf8(cell.c);
+
+        if (cell.fg_color.has_value() || cell.bg_color.has_value())
+        {
+            result += AnsiCodeUtil::RESET_CODE;
+        }
+
+        return result;
     }
 
     void TargetBlitter::clear() const

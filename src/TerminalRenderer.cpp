@@ -1,7 +1,7 @@
 #include <iostream>
 #include <terminal_renderer/TerminalRenderer.hpp>
 #include <thread>
-#include <terminal_renderer/nodes/builder/SceneBuilder.hpp>
+#include <terminal_renderer/builder/SceneExample.hpp>
 #include <terminal_renderer/nodes/container_node/BorderNode.hpp>
 #include <terminal_renderer/nodes/layouts/LayoutNode.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
@@ -21,24 +21,7 @@ namespace TerminalRenderer
 
     void TerminalRenderer::render()
     {
-        SceneBuilder builder;
-        auto layout_node = builder.verticalLayout()
-            .addChild(builder.roundedBorder()
-                .setChild(builder.horizontalLayout()
-                    .addChild(builder.dottedBorder().build())
-                    .addChild(builder.doubleBorder().build())
-                    .build())
-                .build())
-            .addChild(builder.horizontalLayout()
-                .addChild(builder.heavyBorder()
-                    .setChild(builder.verticalLayout()
-                        .addChild(builder.lightBorder().build())
-                        .addChild(builder.dottedBorder().build())
-                        .build())
-                    .build())
-                .addChild(builder.doubleBorder().build())
-                .build())
-            .build();
+        auto layout_node = SceneExample::TextTestScene();
 
         for (int i = 0; ; ++i)
         {

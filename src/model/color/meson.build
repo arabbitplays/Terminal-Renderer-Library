@@ -2,5 +2,8 @@
 
 
 src += files(
-  'SceneBuilder.cpp',
+  'ColorPalette.cpp',
+  'PaletteColor.cpp',
+  'RgbColor.cpp',
+  'StandardColor.cpp',
 )

@@ -12,6 +12,8 @@ namespace TerminalRenderer
         ~TargetBlitter();
 
         void blit(const RenderTargetHandle& target);
+        std::string getCellString(const Cell& cell);
+
     private:
         void clear() const;
         [[nodiscard]] std::string getCursorMoveString(IVec2 pos) const;

@@ -2,7 +2,6 @@
 
 
 src += files(
-  'AnsiCodeUtil.cpp',
-  'TargetActuator.cpp',
-  'TargetBlitter.cpp',
+  'SceneBuilder.cpp',
+  'SceneExample.cpp',
 )
