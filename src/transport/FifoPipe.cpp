@@ -6,12 +6,12 @@
 #include <stdexcept>
 #include <sys/stat.h>
 #include <terminal_renderer/transport/FifoPipe.hpp>
-#include <utility>
 #include <unistd.h>
+#include <utility>
 
 namespace TerminalRenderer
 {
-    FifoPipe::FifoPipe(std::string  name) : name(std::move(name))
+    FifoPipe::FifoPipe(std::string name) : name(std::move(name))
     {
     }
 

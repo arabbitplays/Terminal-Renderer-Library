@@ -24,12 +24,14 @@ namespace TerminalRenderer
     private:
         static bool sameColor(const std::optional<ColorHandle>& a, const std::optional<ColorHandle>& b)
         {
-            if (a.has_value() != b.has_value()) {
+            if (a.has_value() != b.has_value())
+            {
                 return false;
-}
-            if (!a.has_value()) {
+            }
+            if (!a.has_value())
+            {
                 return true;
-}
+            }
             return (*a)->get256ColorIndex() == (*b)->get256ColorIndex();
         }
     };

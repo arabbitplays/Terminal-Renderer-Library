@@ -71,8 +71,8 @@ namespace TerminalRenderer
         struct winsize ws;
         if (ioctl(tty_fd, TIOCGWINSZ, &ws) == 0)
         {
-            return {.origin={0, 0}, .extent={ws.ws_col, ws.ws_row}};
+            return {.origin = {0, 0}, .extent = {ws.ws_col, ws.ws_row}};
         }
-        return {.origin={0, 0}, .extent={0, 0}};
+        return {.origin = {0, 0}, .extent = {0, 0}};
     }
 } // namespace TerminalRenderer

@@ -5,7 +5,7 @@
 
 namespace TerminalRenderer
 {
-    TargetBlitter::TargetBlitter(TransportHandle  transport)
+    TargetBlitter::TargetBlitter(TransportHandle transport)
         : transport(std::move(transport)), last_target(std::make_shared<RenderTarget>(IVec2::zero))
     {
         setCursorVisibility(false);
@@ -73,7 +73,7 @@ namespace TerminalRenderer
         transport->send("\x1b[2J");
     }
 
-    std::string TargetBlitter::getCursorMoveString(IVec2 pos) 
+    std::string TargetBlitter::getCursorMoveString(IVec2 pos)
     {
         return std::format("\x1b[{};{}H", pos.y + 1, pos.x + 1);
     }

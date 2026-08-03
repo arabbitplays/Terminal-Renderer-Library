@@ -8,7 +8,7 @@ namespace TerminalRenderer
     class FifoPipe
     {
     public:
-        explicit FifoPipe(std::string  name);
+        explicit FifoPipe(std::string name);
         ~FifoPipe() = default;
 
         void create() const;

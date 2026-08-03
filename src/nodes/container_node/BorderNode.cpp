@@ -29,7 +29,7 @@ namespace TerminalRenderer
             drawBorder(target_actuator);
         }
 
-        const Viewport inner_viewport = {.origin=content_offset, .extent=inner_extent};
+        const Viewport inner_viewport = {.origin = content_offset, .extent = inner_extent};
 
         TargetActuator inner_actuator = target_actuator.createInnerTargetActuator(inner_viewport);
         renderChild(inner_actuator);
@@ -55,7 +55,7 @@ namespace TerminalRenderer
             return;
         }
 
-        Cell cell{.c=0, .fg_color=std::nullopt, .bg_color=std::nullopt};
+        Cell cell{.c = 0, .fg_color = std::nullopt, .bg_color = std::nullopt};
 
         cell.c = border_char_set.top_left;
         target_actuator.setCell(start, cell);

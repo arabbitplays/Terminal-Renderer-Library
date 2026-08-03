@@ -36,7 +36,7 @@ namespace TerminalRenderer
 
     TargetActuator TargetActuator::createInnerTargetActuator(Viewport inner_viewport) const
     {
-        Viewport new_viewport = {.origin=getGlobalPos(inner_viewport.origin), .extent=inner_viewport.extent};
+        Viewport new_viewport = {.origin = getGlobalPos(inner_viewport.origin), .extent = inner_viewport.extent};
         return TargetActuator{render_target, new_viewport};
     }
 

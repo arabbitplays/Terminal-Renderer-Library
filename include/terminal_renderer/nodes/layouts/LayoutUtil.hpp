@@ -40,7 +40,7 @@ namespace TerminalRenderer
 
         static Viewport makeSlot(int32_t main_offset, int32_t main_size, int32_t cross_size, Axis axis)
         {
-            return Viewport{.origin=makeVec(main_offset, 0, axis), .extent=makeVec(main_size, cross_size, axis)};
+            return Viewport{.origin = makeVec(main_offset, 0, axis), .extent = makeVec(main_size, cross_size, axis)};
         }
 
         static std::vector<int32_t> distribute(uint32_t total_size, std::vector<DistributionRequest> requests)

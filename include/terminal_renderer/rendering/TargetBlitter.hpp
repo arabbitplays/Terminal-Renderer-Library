@@ -8,7 +8,7 @@ namespace TerminalRenderer
     class TargetBlitter
     {
     public:
-        explicit TargetBlitter(TransportHandle  transport);
+        explicit TargetBlitter(TransportHandle transport);
         ~TargetBlitter();
 
         void blit(const RenderTargetHandle& target);
@@ -16,7 +16,7 @@ namespace TerminalRenderer
 
     private:
         void clear() const;
-        [[nodiscard]] static std::string getCursorMoveString(IVec2 pos) ;
+        [[nodiscard]] static std::string getCursorMoveString(IVec2 pos);
         void setCursorVisibility(bool visible);
         static std::string toUtf8(char32_t cp);
 

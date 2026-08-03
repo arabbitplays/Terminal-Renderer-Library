@@ -13,7 +13,7 @@ namespace TerminalRenderer
     {
         IVec2 extent = target_actuator.getExtent();
         int32_t x = 0;
-        Cell cell = {.c=0, .fg_color=fg_color, .bg_color=bg_color};
+        Cell cell = {.c = 0, .fg_color = fg_color, .bg_color = bg_color};
         while (x < extent.x && static_cast<uint32_t>(x) < text.size())
         {
             cell.c = text.at(x);
