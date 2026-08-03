@@ -26,6 +26,7 @@
             ninja
             pkg-config
             python3
+            clang-tools
           ];
 
           shellHook = ''

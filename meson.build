@@ -48,3 +48,22 @@ pkg.generate(
     description: 'A simple cpp terminal rendering library',
     version: meson.project_version()
 )
+
+clang_format = find_program('clang-format', required: false)
+if clang_format.found()
+    run_target('format',
+        command: [
+            find_program('bash'),
+            meson.source_root() / 'scripts' / 'format.sh',
+            meson.source_root(),
+            clang_format.full_path(),
+        ]
+    )
+endif
+
+run_clang_tidy = find_program('run-clang-tidy', required: false)
+if run_clang_tidy.found()
+    run_target('tidy',
+        command: [run_clang_tidy, '-p', meson.build_root()]
+    )
+endif
