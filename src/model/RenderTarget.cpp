@@ -61,4 +61,4 @@ namespace TerminalRenderer
     {
         return {};
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

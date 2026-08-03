@@ -15,4 +15,4 @@ namespace TerminalRenderer
     {
         return 16 + 36 * r + 6 * g + b;
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

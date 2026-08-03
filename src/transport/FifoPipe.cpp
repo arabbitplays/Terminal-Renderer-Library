@@ -4,9 +4,9 @@
 #include <cstring>
 #include <fcntl.h>
 #include <stdexcept>
-#include <unistd.h>
 #include <sys/stat.h>
 #include <terminal_renderer/transport/FifoPipe.hpp>
+#include <unistd.h>
 
 namespace TerminalRenderer
 {
@@ -60,4 +60,4 @@ namespace TerminalRenderer
     {
         return is_open;
     }
-}
+} // namespace TerminalRenderer

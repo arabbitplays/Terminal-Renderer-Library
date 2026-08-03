@@ -29,6 +29,6 @@ namespace TerminalRenderer
         StandardColorType type;
         bool bright;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_STANDARDCOLOR_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_STANDARDCOLOR_HPP

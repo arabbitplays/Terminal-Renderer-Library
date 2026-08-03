@@ -1,13 +1,12 @@
 #ifndef YAKSHA_TERMINALRENDERER_HPP
 #define YAKSHA_TERMINALRENDERER_HPP
-#include <memory>
-#include <string>
-#include <terminal_renderer/rendering/TargetActuator.hpp>
-#include <terminal_renderer/model/RenderTarget.hpp>
-#include <terminal_renderer/rendering/TargetBlitter.hpp>
-
 #include "transport/TerminalTransport.hpp"
 
+#include <memory>
+#include <string>
+#include <terminal_renderer/model/RenderTarget.hpp>
+#include <terminal_renderer/rendering/TargetActuator.hpp>
+#include <terminal_renderer/rendering/TargetBlitter.hpp>
 
 namespace TerminalRenderer
 {
@@ -19,6 +18,7 @@ namespace TerminalRenderer
         ~TerminalRenderer() = default;
 
         void render();
+
     private:
         void init();
         void initRenderTarget(const IVec2& extent);
@@ -31,7 +31,6 @@ namespace TerminalRenderer
     };
 
     typedef std::shared_ptr<TerminalRenderer> RendererHandle;
-}
+} // namespace TerminalRenderer
 
-
-#endif //YAKSHA_TERMINALRENDERER_HPP
+#endif // YAKSHA_TERMINALRENDERER_HPP

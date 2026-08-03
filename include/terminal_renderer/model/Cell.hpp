@@ -13,9 +13,7 @@ namespace TerminalRenderer
 
         bool operator==(const Cell& other) const
         {
-            return c == other.c
-                && sameColor(fg_color, other.fg_color)
-                && sameColor(bg_color, other.bg_color);
+            return c == other.c && sameColor(fg_color, other.fg_color) && sameColor(bg_color, other.bg_color);
         }
 
         bool operator!=(const Cell& other) const
@@ -26,11 +24,13 @@ namespace TerminalRenderer
     private:
         static bool sameColor(const std::optional<ColorHandle>& a, const std::optional<ColorHandle>& b)
         {
-            if (a.has_value() != b.has_value()) return false;
-            if (!a.has_value()) return true;
+            if (a.has_value() != b.has_value())
+                return false;
+            if (!a.has_value())
+                return true;
             return (*a)->get256ColorIndex() == (*b)->get256ColorIndex();
         }
     };
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_CELL_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_CELL_HPP

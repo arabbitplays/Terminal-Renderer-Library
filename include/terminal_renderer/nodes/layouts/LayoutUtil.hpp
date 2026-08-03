@@ -1,10 +1,10 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_LAYOUTUTIL_HPP
 #define TERMINAL_RENDERER_LIBRARY_LAYOUTUTIL_HPP
 #include <cstdint>
-#include <vector>
 #include <terminal_renderer/core/IVec2.hpp>
 #include <terminal_renderer/model/Viewport.hpp>
 #include <terminal_renderer/nodes/LayoutInfo.hpp>
+#include <vector>
 
 namespace TerminalRenderer
 {
@@ -93,6 +93,6 @@ namespace TerminalRenderer
             return results;
         }
     };
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_LAYOUTUTIL_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_LAYOUTUTIL_HPP

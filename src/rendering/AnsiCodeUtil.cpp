@@ -13,4 +13,4 @@ namespace TerminalRenderer
     {
         return "\x1b[48;5;" + std::to_string(color_index) + "m";
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

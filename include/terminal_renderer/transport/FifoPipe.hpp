@@ -3,7 +3,6 @@
 #include <memory>
 #include <string>
 
-
 namespace TerminalRenderer
 {
     class FifoPipe
@@ -27,6 +26,6 @@ namespace TerminalRenderer
     };
 
     typedef std::shared_ptr<FifoPipe> FifoPipeHandle;
-}
+} // namespace TerminalRenderer
 
-#endif //YAKSHA_FIFOPIPE_HPP
+#endif // YAKSHA_FIFOPIPE_HPP

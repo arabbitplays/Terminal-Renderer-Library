@@ -27,6 +27,6 @@ namespace TerminalRenderer
         Viewport lastViewport{};
         ResizeCallback resizeCallback;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_PIPETRANSPORT_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_PIPETRANSPORT_HPP

@@ -1,9 +1,9 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_RENDERTARGET_HPP
 #define TERMINAL_RENDERER_LIBRARY_RENDERTARGET_HPP
 #include <memory>
-#include <vector>
 #include <terminal_renderer/core/IVec2.hpp>
 #include <terminal_renderer/model/Cell.hpp>
+#include <vector>
 
 namespace TerminalRenderer
 {
@@ -28,6 +28,6 @@ namespace TerminalRenderer
     };
 
     typedef std::shared_ptr<RenderTarget> RenderTargetHandle;
-} // RenderTarget
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_RENDERTARGET_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_RENDERTARGET_HPP

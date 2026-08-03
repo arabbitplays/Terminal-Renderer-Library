@@ -18,12 +18,13 @@ namespace TerminalRenderer
         [[nodiscard]] IVec2 getExtent() const;
 
         TargetActuator createInnerTargetActuator(Viewport inner_viewport) const;
+
     private:
         [[nodiscard]] IVec2 getGlobalPos(IVec2 local_pos) const;
 
         RenderTargetHandle render_target;
         Viewport viewport;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_TARGETACTUATOR_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_TARGETACTUATOR_HPP

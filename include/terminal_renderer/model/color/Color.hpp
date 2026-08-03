@@ -15,6 +15,6 @@ namespace TerminalRenderer
     };
 
     typedef std::shared_ptr<Color> ColorHandle;
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_COLOR_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_COLOR_HPP

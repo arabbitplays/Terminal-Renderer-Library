@@ -1,5 +1,4 @@
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
-
 #include <utility>
 
 namespace TerminalRenderer
@@ -25,9 +24,9 @@ namespace TerminalRenderer
     LayoutInfo TextNode::getLayoutInfo()
     {
         LayoutInfo layoutInfo;
-        layoutInfo.requestedSize = { static_cast<int32_t>(text.size()), 1};
+        layoutInfo.requestedSize = {static_cast<int32_t>(text.size()), 1};
         layoutInfo.minimumSize = {};
         layoutInfo.scaling_mode = FLEXIBLE;
         return layoutInfo;
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

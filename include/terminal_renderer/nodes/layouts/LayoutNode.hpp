@@ -8,7 +8,9 @@ namespace TerminalRenderer
     class LayoutNode : public GroupNode
     {
     public:
-        explicit LayoutNode(Axis axis) : axis(axis) {}
+        explicit LayoutNode(Axis axis) : axis(axis)
+        {
+        }
 
         void render(TargetActuator& targetActuator) override;
         LayoutInfo getLayoutInfo() override;
@@ -18,6 +20,6 @@ namespace TerminalRenderer
     private:
         std::vector<int32_t> getDistribution(IVec2 extent) const;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_LAYOUTNODE_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_LAYOUTNODE_HPP

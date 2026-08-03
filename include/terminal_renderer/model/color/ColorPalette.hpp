@@ -1,7 +1,7 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_COLORPALETTE_HPP
 #define TERMINAL_RENDERER_LIBRARY_COLORPALETTE_HPP
-#include <vector>
 #include <terminal_renderer/model/color/Color.hpp>
+#include <vector>
 
 namespace TerminalRenderer
 {
@@ -16,6 +16,6 @@ namespace TerminalRenderer
     private:
         std::vector<ColorHandle> palette;
     };
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_COLORPALETTE_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_COLORPALETTE_HPP

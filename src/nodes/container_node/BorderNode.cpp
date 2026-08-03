@@ -1,17 +1,10 @@
 #include <terminal_renderer/nodes/container_node/BorderNode.hpp>
-
 #include <utility>
 
 namespace TerminalRenderer
 {
-    BorderNode::BorderNode(BorderCharSet border_char_set,
-                           IVec2 margin,
-                           bool draw_border,
-                           IVec2 padding)
-        : border_char_set(std::move(border_char_set)),
-          margin(margin),
-          draw_border(draw_border),
-          padding(padding)
+    BorderNode::BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding)
+        : border_char_set(std::move(border_char_set)), margin(margin), draw_border(draw_border), padding(padding)
     {
     }
 
@@ -36,7 +29,7 @@ namespace TerminalRenderer
             drawBorder(targetActuator);
         }
 
-        const Viewport inner_viewport = { content_offset, inner_extent };
+        const Viewport inner_viewport = {content_offset, inner_extent};
 
         TargetActuator innerActuator = targetActuator.createInnerTargetActuator(inner_viewport);
         renderChild(innerActuator);
@@ -83,7 +76,7 @@ namespace TerminalRenderer
         cell.c = border_char_set.vertical;
         for (int32_t i = 1; i < extent.y - 1; ++i)
         {
-            targetActuator.setCell({start.x,                start.y + i}, cell);
+            targetActuator.setCell({start.x, start.y + i}, cell);
             targetActuator.setCell({start.x + extent.x - 1, start.y + i}, cell);
         }
     }
@@ -106,4 +99,4 @@ namespace TerminalRenderer
         }
         return content_offset;
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

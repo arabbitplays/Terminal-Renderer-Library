@@ -16,6 +16,6 @@ namespace TerminalRenderer
     };
 
     typedef std::shared_ptr<RenderNode> RenderNodeHandle;
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_NODE_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_NODE_HPP

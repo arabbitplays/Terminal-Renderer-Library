@@ -16,6 +16,6 @@ namespace TerminalRenderer
         IVec2 minimumSize;
         ScalingMode scaling_mode = FLEXIBLE;
     };
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_LAYOUTINFO_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_LAYOUTINFO_HPP

@@ -26,6 +26,6 @@ namespace TerminalRenderer
 
         ResizeCallback resizeCallback;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_STDOUTTRANSPORT_H
+#endif // TERMINAL_RENDERER_LIBRARY_STDOUTTRANSPORT_H

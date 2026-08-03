@@ -7,6 +7,6 @@ namespace TerminalRenderer
     class LeafNode : public RenderNode
     {
     };
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_LEAFNODE_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_LEAFNODE_HPP

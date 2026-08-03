@@ -123,4 +123,4 @@ namespace TerminalRenderer
         }
         return out;
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

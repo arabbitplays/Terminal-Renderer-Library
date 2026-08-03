@@ -13,6 +13,6 @@ namespace TerminalRenderer
         static std::string toAnsiForegroundColorCode(uint32_t color_index);
         static std::string toAnsiBackgroundColorCode(uint32_t color_index);
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_ANSICOREUTIL_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_ANSICOREUTIL_HPP

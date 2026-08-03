@@ -23,6 +23,6 @@ namespace TerminalRenderer
         TransportHandle transport;
         RenderTargetHandle last_target;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_TARGETBLITTER_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_TARGETBLITTER_HPP

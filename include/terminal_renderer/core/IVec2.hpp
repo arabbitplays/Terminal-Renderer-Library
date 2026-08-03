@@ -11,9 +11,15 @@ namespace TerminalRenderer
         int32_t x;
         int32_t y;
 
-        constexpr IVec2() : x(0), y(0) {}
-        constexpr explicit IVec2(int32_t value) : x(value), y(value) {}
-        constexpr IVec2(int32_t x, int32_t y) : x(x), y(y) {}
+        constexpr IVec2() : x(0), y(0)
+        {
+        }
+        constexpr explicit IVec2(int32_t value) : x(value), y(value)
+        {
+        }
+        constexpr IVec2(int32_t x, int32_t y) : x(x), y(y)
+        {
+        }
 
         constexpr IVec2 operator+(const IVec2& other) const
         {
@@ -63,12 +69,11 @@ namespace TerminalRenderer
     {
         return vec * scalar;
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
 namespace std
 {
-    template<>
-    struct hash<TerminalRenderer::IVec2>
+    template <> struct hash<TerminalRenderer::IVec2>
     {
         size_t operator()(const TerminalRenderer::IVec2& vec) const noexcept
         {
@@ -77,6 +82,6 @@ namespace std
             return hx ^ (hy + 0x9e3779b97f4a7c15ULL + (hx << 6) + (hx >> 2));
         }
     };
-} // std
+} // namespace std
 
-#endif //TERMINAL_RENDERER_LIBRARY_IVEC2_H
+#endif // TERMINAL_RENDERER_LIBRARY_IVEC2_H

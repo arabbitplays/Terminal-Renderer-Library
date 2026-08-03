@@ -21,5 +21,5 @@ namespace TerminalRenderer
     };
 
     typedef std::shared_ptr<TerminalTransport> TransportHandle;
-}
-#endif //TERMINAL_RENDERER_LIBRARY_TERMINALTRANSPORT_HPP
+} // namespace TerminalRenderer
+#endif // TERMINAL_RENDERER_LIBRARY_TERMINALTRANSPORT_HPP

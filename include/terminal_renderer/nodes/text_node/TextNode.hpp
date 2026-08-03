@@ -19,6 +19,6 @@ namespace TerminalRenderer
         std::optional<ColorHandle> fg_color;
         std::optional<ColorHandle> bg_color;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_TEXTNODE_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_TEXTNODE_HPP

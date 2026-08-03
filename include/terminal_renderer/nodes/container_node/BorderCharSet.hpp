@@ -19,11 +19,11 @@ namespace TerminalRenderer
         static const BorderCharSet RoundedBorderCharSet;
     };
 
-    inline const BorderCharSet BorderCharSet::LightBorderCharSet  {U'┌', U'┐', U'└', U'┘', U'─', U'│'};
-    inline const BorderCharSet BorderCharSet::HeavyBorderCharSet  {U'┏', U'┓', U'┗', U'┛', U'━', U'┃'};
-    inline const BorderCharSet BorderCharSet::DoubleBorderCharSet {U'╔', U'╗', U'╚', U'╝', U'═', U'║'};
-    inline const BorderCharSet BorderCharSet::DottedBorderCharSet {U'┌', U'┐', U'└', U'┘', U'┈', U'┊'};
+    inline const BorderCharSet BorderCharSet::LightBorderCharSet{U'┌', U'┐', U'└', U'┘', U'─', U'│'};
+    inline const BorderCharSet BorderCharSet::HeavyBorderCharSet{U'┏', U'┓', U'┗', U'┛', U'━', U'┃'};
+    inline const BorderCharSet BorderCharSet::DoubleBorderCharSet{U'╔', U'╗', U'╚', U'╝', U'═', U'║'};
+    inline const BorderCharSet BorderCharSet::DottedBorderCharSet{U'┌', U'┐', U'└', U'┘', U'┈', U'┊'};
     inline const BorderCharSet BorderCharSet::RoundedBorderCharSet{U'╭', U'╮', U'╰', U'╯', U'─', U'│'};
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_BORDERCHARSET_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_BORDERCHARSET_HPP

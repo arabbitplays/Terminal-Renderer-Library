@@ -10,6 +10,6 @@ namespace TerminalRenderer
         static RenderNodeHandle LayoutTestScene();
         static RenderNodeHandle TextTestScene();
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_SCENEEXAMPLE_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_SCENEEXAMPLE_HPP

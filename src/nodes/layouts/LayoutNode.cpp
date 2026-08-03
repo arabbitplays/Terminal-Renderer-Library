@@ -26,8 +26,8 @@ namespace TerminalRenderer
                 curr += slot;
                 continue;
             }
-            TargetActuator childActuator = targetActuator.createInnerTargetActuator(
-                LayoutUtil::makeSlot(curr, slot, cross_size, axis));
+            TargetActuator childActuator =
+                targetActuator.createInnerTargetActuator(LayoutUtil::makeSlot(curr, slot, cross_size, axis));
             children.at(i)->render(childActuator);
             curr += slot;
         }
@@ -39,9 +39,8 @@ namespace TerminalRenderer
         for (const auto& child : children)
         {
             LayoutInfo layoutInfo = child->getLayoutInfo();
-            requests.emplace_back(layoutInfo.scaling_mode,
-                                  LayoutUtil::mainAxis(layoutInfo.requestedSize, axis));
+            requests.emplace_back(layoutInfo.scaling_mode, LayoutUtil::mainAxis(layoutInfo.requestedSize, axis));
         }
         return LayoutUtil::distribute(LayoutUtil::mainAxis(extent, axis), requests);
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

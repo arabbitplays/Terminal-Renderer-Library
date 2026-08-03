@@ -1,8 +1,7 @@
-#include <terminal_renderer/transport/StdOutTransport.hpp>
-
 #include <csignal>
 #include <iostream>
 #include <sys/ioctl.h>
+#include <terminal_renderer/transport/StdOutTransport.hpp>
 #include <unistd.h>
 
 namespace TerminalRenderer
@@ -29,10 +28,7 @@ namespace TerminalRenderer
         struct winsize ws;
         if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == 0)
         {
-            return {
-                {0, 0},
-                {ws.ws_col, ws.ws_row}
-            };
+            return {{0, 0}, {ws.ws_col, ws.ws_row}};
         }
         return {{0, 0}, {0, 0}};
     }
@@ -54,4 +50,4 @@ namespace TerminalRenderer
     {
         resized.store(true, std::memory_order_relaxed);
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer
