@@ -20,27 +20,27 @@ namespace TerminalRenderer
 
     ContainerBuilder<BorderNode> SceneBuilder::lightBorder(uint32_t margin, uint32_t padding) const
     {
-        return ContainerBuilder<BorderNode>{makeBorder(BorderCharSet::LightBorderCharSet, margin, padding)};
+        return ContainerBuilder<BorderNode>{makeBorder(LIGHT_BORDER_CHAR_SET, margin, padding)};
     }
 
     ContainerBuilder<BorderNode> SceneBuilder::heavyBorder(uint32_t margin, uint32_t padding) const
     {
-        return ContainerBuilder<BorderNode>{makeBorder(BorderCharSet::HeavyBorderCharSet, margin, padding)};
+        return ContainerBuilder<BorderNode>{makeBorder(HEAVY_BORDER_CHAR_SET, margin, padding)};
     }
 
     ContainerBuilder<BorderNode> SceneBuilder::doubleBorder(uint32_t margin, uint32_t padding) const
     {
-        return ContainerBuilder<BorderNode>{makeBorder(BorderCharSet::DoubleBorderCharSet, margin, padding)};
+        return ContainerBuilder<BorderNode>{makeBorder(DOUBLE_BORDER_CHAR_SET, margin, padding)};
     }
 
     ContainerBuilder<BorderNode> SceneBuilder::dottedBorder(uint32_t margin, uint32_t padding) const
     {
-        return ContainerBuilder<BorderNode>{makeBorder(BorderCharSet::DottedBorderCharSet, margin, padding)};
+        return ContainerBuilder<BorderNode>{makeBorder(DOTTED_BORDER_CHAR_SET, margin, padding)};
     }
 
     ContainerBuilder<BorderNode> SceneBuilder::roundedBorder(uint32_t margin, uint32_t padding) const
     {
-        return ContainerBuilder<BorderNode>{makeBorder(BorderCharSet::RoundedBorderCharSet, margin, padding)};
+        return ContainerBuilder<BorderNode>{makeBorder(ROUNDED_BORDER_CHAR_SET, margin, padding)};
     }
 
     GroupBuilder<LayoutNode> SceneBuilder::horizontalLayout() const

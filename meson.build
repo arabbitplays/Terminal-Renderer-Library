@@ -61,9 +61,24 @@ if clang_format.found()
     )
 endif
 
-run_clang_tidy = find_program('run-clang-tidy', required: false)
-if run_clang_tidy.found()
+clang_tidy = find_program('clang-tidy', required: false)
+if clang_tidy.found()
     run_target('tidy',
-        command: [run_clang_tidy, '-p', meson.build_root()]
+        command: [
+            find_program('bash'),
+            meson.source_root() / 'scripts' / 'tidy.sh',
+            meson.source_root(),
+            meson.build_root(),
+            clang_tidy.full_path(),
+        ]
+    )
+    run_target('fix',
+        command: [
+            find_program('bash'),
+            meson.source_root() / 'scripts' / 'fix.sh',
+            meson.source_root(),
+            meson.build_root(),
+            clang_tidy.full_path(),
+        ]
     )
 endif

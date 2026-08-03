@@ -27,6 +27,7 @@
             pkg-config
             python3
             clang-tools
+            clang   
           ];
 
           shellHook = ''
