@@ -1,5 +1,6 @@
 #include <cassert>
 #include <terminal_renderer/model/RenderTarget.hpp>
+#include <utility>
 
 namespace TerminalRenderer
 {
@@ -13,37 +14,37 @@ namespace TerminalRenderer
         cells.assign(extent.y, std::vector<Cell>(extent.x, createEmptyCell()));
     }
 
-    void RenderTarget::resize(IVec2 newExtent)
+    void RenderTarget::resize(IVec2 new_extent)
     {
-        if (newExtent.y < extent.y)
+        if (new_extent.y < extent.y)
         {
-            cells.resize(newExtent.y);
+            cells.resize(new_extent.y);
         }
 
-        if (newExtent.x != extent.x)
+        if (new_extent.x != extent.x)
         {
             for (auto& row : cells)
             {
-                row.resize(newExtent.x, createEmptyCell());
+                row.resize(new_extent.x, createEmptyCell());
             }
         }
 
-        if (newExtent.y > extent.y)
+        if (new_extent.y > extent.y)
         {
-            cells.reserve(newExtent.y);
-            for (int32_t y = extent.y; y < newExtent.y; ++y)
+            cells.reserve(new_extent.y);
+            for (int32_t y = extent.y; y < new_extent.y; ++y)
             {
-                cells.emplace_back(newExtent.x, createEmptyCell());
+                cells.emplace_back(new_extent.x, createEmptyCell());
             }
         }
 
-        extent = newExtent;
+        extent = new_extent;
     }
 
     Cell RenderTarget::setCell(IVec2 pos, Cell cell)
     {
         assert(pos.x >= 0 && pos.x < extent.x && pos.y >= 0 && pos.y < extent.y);
-        return cells[pos.y][pos.x] = cell;
+        return cells[pos.y][pos.x] = std::move(cell);
     }
 
     Cell RenderTarget::getCell(const IVec2 pos)
@@ -61,4 +62,4 @@ namespace TerminalRenderer
     {
         return {};
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

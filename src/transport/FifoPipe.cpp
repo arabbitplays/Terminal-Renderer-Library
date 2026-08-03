@@ -1,16 +1,17 @@
 
-#include <assert.h>
+#include <cassert>
 #include <csignal>
 #include <cstring>
 #include <fcntl.h>
 #include <stdexcept>
-#include <unistd.h>
 #include <sys/stat.h>
 #include <terminal_renderer/transport/FifoPipe.hpp>
+#include <unistd.h>
+#include <utility>
 
 namespace TerminalRenderer
 {
-    FifoPipe::FifoPipe(const std::string& name) : name(name)
+    FifoPipe::FifoPipe(std::string name) : name(std::move(name))
     {
     }
 
@@ -60,4 +61,4 @@ namespace TerminalRenderer
     {
         return is_open;
     }
-}
+} // namespace TerminalRenderer

@@ -12,13 +12,13 @@ namespace TerminalRenderer
     public:
         TextNode(std::string text, std::optional<ColorHandle> fg_color, std::optional<ColorHandle> bg_color);
 
-        void render(TargetActuator& targetActuator) override;
+        void render(TargetActuator& target_actuator) override;
         LayoutInfo getLayoutInfo() override;
 
         std::string text;
         std::optional<ColorHandle> fg_color;
         std::optional<ColorHandle> bg_color;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_TEXTNODE_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_TEXTNODE_HPP

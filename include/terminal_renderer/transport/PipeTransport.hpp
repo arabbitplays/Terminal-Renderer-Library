@@ -21,12 +21,12 @@ namespace TerminalRenderer
         Viewport queryViewport() const;
 
         FifoPipeHandle pipe;
-        std::string ttyPath;
-        int ttyFd = -1;
+        std::string tty_path;
+        int tty_fd = -1;
 
-        Viewport lastViewport{};
-        ResizeCallback resizeCallback;
+        Viewport last_viewport{};
+        ResizeCallback resize_callback;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_PIPETRANSPORT_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_PIPETRANSPORT_HPP

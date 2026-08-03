@@ -2,17 +2,18 @@
 #define TERMINAL_RENDERER_LIBRARY_ANSICOREUTIL_HPP
 #include <cstdint>
 #include <string>
+#include <string_view>
 
 namespace TerminalRenderer
 {
     class AnsiCodeUtil
     {
     public:
-        static const std::string RESET_CODE;
+        static constexpr std::string_view reset_code = "\x1b[0m";
 
         static std::string toAnsiForegroundColorCode(uint32_t color_index);
         static std::string toAnsiBackgroundColorCode(uint32_t color_index);
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_ANSICOREUTIL_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_ANSICOREUTIL_HPP

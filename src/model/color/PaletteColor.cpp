@@ -1,5 +1,5 @@
-#include <terminal_renderer/model/color/PaletteColor.hpp>
 #include <terminal_renderer/model/color/ColorPalette.hpp>
+#include <terminal_renderer/model/color/PaletteColor.hpp>
 
 namespace TerminalRenderer
 {
@@ -17,4 +17,4 @@ namespace TerminalRenderer
         ColorPalette palette; // TODO where to get this from?
         return palette.getColor(index)->get256ColorIndex();
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

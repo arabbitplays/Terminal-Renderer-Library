@@ -1,11 +1,12 @@
 #include <format>
 #include <terminal_renderer/rendering/AnsiCodeUtil.hpp>
 #include <terminal_renderer/rendering/TargetBlitter.hpp>
+#include <utility>
 
 namespace TerminalRenderer
 {
-    TargetBlitter::TargetBlitter(const TransportHandle& transport)
-        : transport(transport), last_target(std::make_shared<RenderTarget>(IVec2::Zero))
+    TargetBlitter::TargetBlitter(TransportHandle transport)
+        : transport(std::move(transport)), last_target(std::make_shared<RenderTarget>(IVec2::zero))
     {
         setCursorVisibility(false);
     }
@@ -61,7 +62,7 @@ namespace TerminalRenderer
 
         if (cell.fg_color.has_value() || cell.bg_color.has_value())
         {
-            result += AnsiCodeUtil::RESET_CODE;
+            result += AnsiCodeUtil::reset_code;
         }
 
         return result;
@@ -72,7 +73,7 @@ namespace TerminalRenderer
         transport->send("\x1b[2J");
     }
 
-    std::string TargetBlitter::getCursorMoveString(IVec2 pos) const
+    std::string TargetBlitter::getCursorMoveString(IVec2 pos)
     {
         return std::format("\x1b[{};{}H", pos.y + 1, pos.x + 1);
     }
@@ -123,4 +124,4 @@ namespace TerminalRenderer
         }
         return out;
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

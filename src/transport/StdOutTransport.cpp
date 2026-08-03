@@ -1,8 +1,7 @@
-#include <terminal_renderer/transport/StdOutTransport.hpp>
-
 #include <csignal>
 #include <iostream>
 #include <sys/ioctl.h>
+#include <terminal_renderer/transport/StdOutTransport.hpp>
 #include <unistd.h>
 
 namespace TerminalRenderer
@@ -29,29 +28,26 @@ namespace TerminalRenderer
         struct winsize ws;
         if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &ws) == 0)
         {
-            return {
-                {0, 0},
-                {ws.ws_col, ws.ws_row}
-            };
+            return {.origin = {0, 0}, .extent = {ws.ws_col, ws.ws_row}};
         }
-        return {{0, 0}, {0, 0}};
+        return {.origin = {0, 0}, .extent = {0, 0}};
     }
 
     void StdOutTransport::setResizeCallback(ResizeCallback callback)
     {
-        resizeCallback = std::move(callback);
+        resize_callback = std::move(callback);
     }
 
     void StdOutTransport::pollEvents()
     {
-        if (resized.exchange(false, std::memory_order_relaxed) && resizeCallback)
+        if (resized.exchange(false, std::memory_order_relaxed) && resize_callback)
         {
-            resizeCallback(getViewport());
+            resize_callback(getViewport());
         }
     }
 
-    void StdOutTransport::onWinch(int)
+    void StdOutTransport::onWinch(int /*unused*/)
     {
         resized.store(true, std::memory_order_relaxed);
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

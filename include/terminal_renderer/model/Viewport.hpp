@@ -9,6 +9,6 @@ namespace TerminalRenderer
         IVec2 origin;
         IVec2 extent;
     };
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_VIEWPORT_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_VIEWPORT_HPP

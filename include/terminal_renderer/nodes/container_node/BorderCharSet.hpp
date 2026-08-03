@@ -11,19 +11,38 @@ namespace TerminalRenderer
         char32_t bottom_right;
         char32_t horizontal;
         char32_t vertical;
-
-        static const BorderCharSet LightBorderCharSet;
-        static const BorderCharSet HeavyBorderCharSet;
-        static const BorderCharSet DoubleBorderCharSet;
-        static const BorderCharSet DottedBorderCharSet;
-        static const BorderCharSet RoundedBorderCharSet;
     };
 
-    inline const BorderCharSet BorderCharSet::LightBorderCharSet  {U'┌', U'┐', U'└', U'┘', U'─', U'│'};
-    inline const BorderCharSet BorderCharSet::HeavyBorderCharSet  {U'┏', U'┓', U'┗', U'┛', U'━', U'┃'};
-    inline const BorderCharSet BorderCharSet::DoubleBorderCharSet {U'╔', U'╗', U'╚', U'╝', U'═', U'║'};
-    inline const BorderCharSet BorderCharSet::DottedBorderCharSet {U'┌', U'┐', U'└', U'┘', U'┈', U'┊'};
-    inline const BorderCharSet BorderCharSet::RoundedBorderCharSet{U'╭', U'╮', U'╰', U'╯', U'─', U'│'};
-}
+    inline constexpr BorderCharSet light_border_char_set{.top_left = U'┌',
+        .top_right = U'┐',
+        .bottom_left = U'└',
+        .bottom_right = U'┘',
+        .horizontal = U'─',
+        .vertical = U'│'};
+    inline constexpr BorderCharSet heavy_border_char_set{.top_left = U'┏',
+        .top_right = U'┓',
+        .bottom_left = U'┗',
+        .bottom_right = U'┛',
+        .horizontal = U'━',
+        .vertical = U'┃'};
+    inline constexpr BorderCharSet double_border_char_set{.top_left = U'╔',
+        .top_right = U'╗',
+        .bottom_left = U'╚',
+        .bottom_right = U'╝',
+        .horizontal = U'═',
+        .vertical = U'║'};
+    inline constexpr BorderCharSet dotted_border_char_set{.top_left = U'┌',
+        .top_right = U'┐',
+        .bottom_left = U'└',
+        .bottom_right = U'┘',
+        .horizontal = U'┈',
+        .vertical = U'┊'};
+    inline constexpr BorderCharSet rounded_border_char_set{.top_left = U'╭',
+        .top_right = U'╮',
+        .bottom_left = U'╰',
+        .bottom_right = U'╯',
+        .horizontal = U'─',
+        .vertical = U'│'};
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_BORDERCHARSET_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_BORDERCHARSET_HPP

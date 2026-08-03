@@ -7,9 +7,9 @@ namespace TerminalRenderer
     class SceneExample
     {
     public:
-        static RenderNodeHandle LayoutTestScene();
-        static RenderNodeHandle TextTestScene();
+        static RenderNodeHandle layoutTestScene();
+        static RenderNodeHandle textTestScene();
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_SCENEEXAMPLE_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_SCENEEXAMPLE_HPP

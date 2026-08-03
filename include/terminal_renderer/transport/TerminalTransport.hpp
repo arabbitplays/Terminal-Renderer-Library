@@ -20,6 +20,6 @@ namespace TerminalRenderer
         virtual void pollEvents() = 0;
     };
 
-    typedef std::shared_ptr<TerminalTransport> TransportHandle;
-}
-#endif //TERMINAL_RENDERER_LIBRARY_TERMINALTRANSPORT_HPP
+    using TransportHandle = std::shared_ptr<TerminalTransport>;
+} // namespace TerminalRenderer
+#endif // TERMINAL_RENDERER_LIBRARY_TERMINALTRANSPORT_HPP

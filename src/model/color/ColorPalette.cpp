@@ -17,4 +17,4 @@ namespace TerminalRenderer
     {
         palette.push_back(color);
     }
-}
+} // namespace TerminalRenderer

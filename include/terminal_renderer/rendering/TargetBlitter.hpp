@@ -8,21 +8,21 @@ namespace TerminalRenderer
     class TargetBlitter
     {
     public:
-        explicit TargetBlitter(const TransportHandle& transport);
+        explicit TargetBlitter(TransportHandle transport);
         ~TargetBlitter();
 
         void blit(const RenderTargetHandle& target);
-        std::string getCellString(const Cell& cell);
+        static std::string getCellString(const Cell& cell);
 
     private:
         void clear() const;
-        [[nodiscard]] std::string getCursorMoveString(IVec2 pos) const;
+        [[nodiscard]] static std::string getCursorMoveString(IVec2 pos);
         void setCursorVisibility(bool visible);
-        std::string toUtf8(char32_t cp);
+        static std::string toUtf8(char32_t cp);
 
         TransportHandle transport;
         RenderTargetHandle last_target;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_TARGETBLITTER_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_TARGETBLITTER_HPP

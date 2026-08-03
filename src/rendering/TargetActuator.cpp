@@ -4,8 +4,8 @@
 
 namespace TerminalRenderer
 {
-    TargetActuator::TargetActuator(RenderTargetHandle render_target, const Viewport viewport) :
-        render_target(std::move(render_target)), viewport(viewport)
+    TargetActuator::TargetActuator(RenderTargetHandle render_target, const Viewport viewport)
+        : render_target(std::move(render_target)), viewport(viewport)
     {
     }
 
@@ -36,13 +36,14 @@ namespace TerminalRenderer
 
     TargetActuator TargetActuator::createInnerTargetActuator(Viewport inner_viewport) const
     {
-        Viewport new_viewport = { getGlobalPos(inner_viewport.origin), inner_viewport.extent };
+        Viewport new_viewport = {.origin = getGlobalPos(inner_viewport.origin), .extent = inner_viewport.extent};
         return TargetActuator{render_target, new_viewport};
     }
 
     IVec2 TargetActuator::getGlobalPos(const IVec2 local_pos) const
     {
-        assert(local_pos.x >= 0 && local_pos.x < viewport.extent.x && local_pos.y >= 0 && local_pos.y < viewport.extent.y);
+        assert(
+            local_pos.x >= 0 && local_pos.x < viewport.extent.x && local_pos.y >= 0 && local_pos.y < viewport.extent.y);
         return viewport.origin + local_pos;
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

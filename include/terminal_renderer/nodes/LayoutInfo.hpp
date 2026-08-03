@@ -12,10 +12,10 @@ namespace TerminalRenderer
 
     struct LayoutInfo
     {
-        IVec2 requestedSize;
-        IVec2 minimumSize;
+        IVec2 requested_size;
+        IVec2 minimum_size;
         ScalingMode scaling_mode = FLEXIBLE;
     };
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_LAYOUTINFO_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_LAYOUTINFO_HPP

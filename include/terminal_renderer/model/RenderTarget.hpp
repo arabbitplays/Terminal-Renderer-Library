@@ -1,9 +1,9 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_RENDERTARGET_HPP
 #define TERMINAL_RENDERER_LIBRARY_RENDERTARGET_HPP
 #include <memory>
-#include <vector>
 #include <terminal_renderer/core/IVec2.hpp>
 #include <terminal_renderer/model/Cell.hpp>
+#include <vector>
 
 namespace TerminalRenderer
 {
@@ -12,7 +12,7 @@ namespace TerminalRenderer
     public:
         RenderTarget(IVec2 extent);
 
-        void resize(IVec2 newExtent);
+        void resize(IVec2 new_extent);
         Cell setCell(IVec2 pos, Cell cell);
         Cell getCell(IVec2 pos);
         [[nodiscard]] IVec2 getExtent() const;
@@ -21,13 +21,13 @@ namespace TerminalRenderer
         void initCells();
         static inline Cell createEmptyCell();
 
-        typedef std::vector<std::vector<Cell>> Cells;
+        using Cells = std::vector<std::vector<Cell>>;
 
-        Cells cells{};
+        Cells cells;
         IVec2 extent;
     };
 
-    typedef std::shared_ptr<RenderTarget> RenderTargetHandle;
-} // RenderTarget
+    using RenderTargetHandle = std::shared_ptr<RenderTarget>;
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_RENDERTARGET_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_RENDERTARGET_HPP

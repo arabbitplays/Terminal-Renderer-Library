@@ -16,6 +16,6 @@ namespace TerminalRenderer
 
         uint32_t index;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_PALETTECOLOR_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_PALETTECOLOR_HPP

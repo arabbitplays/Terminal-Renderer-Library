@@ -16,4 +16,4 @@ namespace TerminalRenderer
         uint32_t bright_offset = bright ? 8 : 0;
         return static_cast<uint32_t>(type) + bright_offset;
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

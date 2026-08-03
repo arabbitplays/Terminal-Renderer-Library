@@ -11,6 +11,7 @@ namespace TerminalRenderer
         static ColorHandle create(uint32_t r, uint32_t g, uint32_t b);
 
         uint32_t get256ColorIndex() override;
+
     private:
         RgbColor(uint32_t r, uint32_t g, uint32_t b);
 
@@ -18,6 +19,6 @@ namespace TerminalRenderer
         uint32_t g;
         uint32_t b;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_RGBCOLOR_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_RGBCOLOR_HPP

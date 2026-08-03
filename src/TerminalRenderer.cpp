@@ -1,12 +1,12 @@
 #include <iostream>
-#include <terminal_renderer/TerminalRenderer.hpp>
-#include <thread>
 #include <terminal_renderer/builder/SceneExample.hpp>
 #include <terminal_renderer/nodes/container_node/BorderNode.hpp>
 #include <terminal_renderer/nodes/layouts/LayoutNode.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
+#include <terminal_renderer/TerminalRenderer.hpp>
 #include <terminal_renderer/transport/StdOutTransport.hpp>
+#include <thread>
 
 namespace TerminalRenderer
 {
@@ -21,9 +21,9 @@ namespace TerminalRenderer
 
     void TerminalRenderer::render()
     {
-        auto layout_node = SceneExample::TextTestScene();
+        auto layout_node = SceneExample::textTestScene();
 
-        for (int i = 0; ; ++i)
+        for (int i = 0;; ++i)
         {
             transport->pollEvents();
             TargetActuator actuator = getTopLevelActuator();
@@ -37,10 +37,7 @@ namespace TerminalRenderer
 
     void TerminalRenderer::init()
     {
-        transport->setResizeCallback([this](const Viewport& vp)
-        {
-            initRenderTarget(vp.extent);
-        });
+        transport->setResizeCallback([this](const Viewport& vp) { initRenderTarget(vp.extent); });
         auto viewport = transport->getViewport();
         initRenderTarget(viewport.extent);
     }
@@ -52,6 +49,6 @@ namespace TerminalRenderer
 
     TargetActuator TerminalRenderer::getTopLevelActuator()
     {
-        return {render_target, {{0, 0}, render_target->getExtent()}};
+        return {render_target, {.origin = {0, 0}, .extent = render_target->getExtent()}};
     }
-}
+} // namespace TerminalRenderer
