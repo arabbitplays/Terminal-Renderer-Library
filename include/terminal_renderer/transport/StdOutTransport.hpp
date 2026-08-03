@@ -21,10 +21,10 @@ namespace TerminalRenderer
         void pollEvents() override;
 
     private:
-        static void onWinch(int);
+        static void onWinch(int /*unused*/);
         static std::atomic<bool> resized;
 
-        ResizeCallback resizeCallback;
+        ResizeCallback resize_callback;
     };
 } // namespace TerminalRenderer
 

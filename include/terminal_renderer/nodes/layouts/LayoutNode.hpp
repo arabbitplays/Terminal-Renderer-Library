@@ -12,7 +12,7 @@ namespace TerminalRenderer
         {
         }
 
-        void render(TargetActuator& targetActuator) override;
+        void render(TargetActuator& target_actuator) override;
         LayoutInfo getLayoutInfo() override;
 
         Axis axis;

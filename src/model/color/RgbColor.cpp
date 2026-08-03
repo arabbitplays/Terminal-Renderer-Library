@@ -13,6 +13,6 @@ namespace TerminalRenderer
 
     uint32_t RgbColor::get256ColorIndex()
     {
-        return 16 + 36 * r + 6 * g + b;
+        return 16 + (36 * r) + (6 * g) + b;
     }
 } // namespace TerminalRenderer

@@ -8,14 +8,14 @@ namespace TerminalRenderer
     class RenderNode
     {
     public:
-        RenderNode() {};
+        RenderNode() = default;
         virtual ~RenderNode() = default;
 
-        virtual void render(TargetActuator& targetActuator) = 0;
+        virtual void render(TargetActuator& target_actuator) = 0;
         virtual LayoutInfo getLayoutInfo() = 0;
     };
 
-    typedef std::shared_ptr<RenderNode> RenderNodeHandle;
+    using RenderNodeHandle = std::shared_ptr<RenderNode>;
 } // namespace TerminalRenderer
 
 #endif // TERMINAL_RENDERER_LIBRARY_NODE_HPP

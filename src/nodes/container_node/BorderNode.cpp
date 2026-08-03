@@ -4,13 +4,13 @@
 namespace TerminalRenderer
 {
     BorderNode::BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding)
-        : border_char_set(std::move(border_char_set)), margin(margin), draw_border(draw_border), padding(padding)
+        : border_char_set(border_char_set), margin(margin), draw_border(draw_border), padding(padding)
     {
     }
 
-    void BorderNode::render(TargetActuator& targetActuator)
+    void BorderNode::render(TargetActuator& target_actuator)
     {
-        IVec2 extent = targetActuator.getExtent();
+        IVec2 extent = target_actuator.getExtent();
         IVec2 content_offset = getContentOffset();
         IVec2 inner_extent = extent - 2 * content_offset;
         if (inner_extent.x < 0 || inner_extent.y < 0)
@@ -18,76 +18,76 @@ namespace TerminalRenderer
             return;
         }
 
-        if (!draw_border && margin == IVec2::Zero && padding == IVec2::Zero)
+        if (!draw_border && margin == IVec2::zero && padding == IVec2::zero)
         {
-            renderChild(targetActuator);
+            renderChild(target_actuator);
             return;
         }
 
         if (draw_border)
         {
-            drawBorder(targetActuator);
+            drawBorder(target_actuator);
         }
 
-        const Viewport inner_viewport = {content_offset, inner_extent};
+        const Viewport inner_viewport = {.origin=content_offset, .extent=inner_extent};
 
-        TargetActuator innerActuator = targetActuator.createInnerTargetActuator(inner_viewport);
-        renderChild(innerActuator);
+        TargetActuator inner_actuator = target_actuator.createInnerTargetActuator(inner_viewport);
+        renderChild(inner_actuator);
     }
 
     LayoutInfo BorderNode::getLayoutInfo()
     {
-        LayoutInfo childLayoutInfo = child != nullptr ? child->getLayoutInfo() : LayoutInfo();
+        LayoutInfo child_layout_info = child != nullptr ? child->getLayoutInfo() : LayoutInfo();
         LayoutInfo layout_info;
-        layout_info.requestedSize = childLayoutInfo.requestedSize + 2 * getContentOffset();
-        layout_info.minimumSize = 2 * getContentOffset();
+        layout_info.requested_size = child_layout_info.requested_size + 2 * getContentOffset();
+        layout_info.minimum_size = 2 * getContentOffset();
         layout_info.scaling_mode = FLEXIBLE;
         return layout_info;
     }
 
-    void BorderNode::drawBorder(const TargetActuator& targetActuator) const
+    void BorderNode::drawBorder(const TargetActuator& target_actuator) const
     {
         IVec2 start = margin;
-        IVec2 extent = targetActuator.getExtent() - 2 * margin;
+        IVec2 extent = target_actuator.getExtent() - 2 * margin;
 
         if (extent.x < 2 || extent.y < 2)
         {
             return;
         }
 
-        Cell cell{0, std::nullopt, std::nullopt};
+        Cell cell{.c=0, .fg_color=std::nullopt, .bg_color=std::nullopt};
 
         cell.c = border_char_set.top_left;
-        targetActuator.setCell(start, cell);
+        target_actuator.setCell(start, cell);
         cell.c = border_char_set.top_right;
-        targetActuator.setCell(start + IVec2{extent.x - 1, 0}, cell);
+        target_actuator.setCell(start + IVec2{extent.x - 1, 0}, cell);
         cell.c = border_char_set.bottom_left;
-        targetActuator.setCell(start + IVec2{0, extent.y - 1}, cell);
+        target_actuator.setCell(start + IVec2{0, extent.y - 1}, cell);
         cell.c = border_char_set.bottom_right;
-        targetActuator.setCell(start + IVec2{extent.x - 1, extent.y - 1}, cell);
+        target_actuator.setCell(start + IVec2{extent.x - 1, extent.y - 1}, cell);
 
         cell.c = border_char_set.horizontal;
         for (int32_t i = 1; i < extent.x - 1; ++i)
         {
-            targetActuator.setCell({start.x + i, start.y}, cell);
-            targetActuator.setCell({start.x + i, start.y + extent.y - 1}, cell);
+            target_actuator.setCell({start.x + i, start.y}, cell);
+            target_actuator.setCell({start.x + i, start.y + extent.y - 1}, cell);
         }
 
         cell.c = border_char_set.vertical;
         for (int32_t i = 1; i < extent.y - 1; ++i)
         {
-            targetActuator.setCell({start.x, start.y + i}, cell);
-            targetActuator.setCell({start.x + extent.x - 1, start.y + i}, cell);
+            target_actuator.setCell({start.x, start.y + i}, cell);
+            target_actuator.setCell({start.x + extent.x - 1, start.y + i}, cell);
         }
     }
 
-    void BorderNode::renderChild(TargetActuator& targetActuator) const
+    void BorderNode::renderChild(TargetActuator& target_actuator) const
     {
         if (child == nullptr)
         {
             return;
         }
-        child->render(targetActuator);
+        child->render(target_actuator);
     }
 
     IVec2 BorderNode::getContentOffset() const

@@ -30,7 +30,7 @@ namespace TerminalRenderer
         RenderTargetHandle render_target;
     };
 
-    typedef std::shared_ptr<TerminalRenderer> RendererHandle;
+    using RendererHandle = std::shared_ptr<TerminalRenderer>;
 } // namespace TerminalRenderer
 
 #endif // YAKSHA_TERMINALRENDERER_HPP

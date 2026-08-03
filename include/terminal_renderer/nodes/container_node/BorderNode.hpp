@@ -11,7 +11,7 @@ namespace TerminalRenderer
     public:
         BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding);
 
-        void render(TargetActuator& targetActuator) override;
+        void render(TargetActuator& target_actuator) override;
         LayoutInfo getLayoutInfo() override;
 
         BorderCharSet border_char_set;
@@ -20,8 +20,8 @@ namespace TerminalRenderer
         IVec2 padding;
 
     private:
-        void drawBorder(const TargetActuator& targetActuator) const;
-        void renderChild(TargetActuator& targetActuator) const;
+        void drawBorder(const TargetActuator& target_actuator) const;
+        void renderChild(TargetActuator& target_actuator) const;
         [[nodiscard]] IVec2 getContentOffset() const;
     };
 } // namespace TerminalRenderer

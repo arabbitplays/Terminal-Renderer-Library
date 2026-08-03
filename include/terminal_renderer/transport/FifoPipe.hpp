@@ -8,7 +8,7 @@ namespace TerminalRenderer
     class FifoPipe
     {
     public:
-        explicit FifoPipe(const std::string& name);
+        explicit FifoPipe(std::string  name);
         ~FifoPipe() = default;
 
         void create() const;
@@ -25,7 +25,7 @@ namespace TerminalRenderer
         int fd = -1;
     };
 
-    typedef std::shared_ptr<FifoPipe> FifoPipeHandle;
+    using FifoPipeHandle = std::shared_ptr<FifoPipe>;
 } // namespace TerminalRenderer
 
 #endif // YAKSHA_FIFOPIPE_HPP

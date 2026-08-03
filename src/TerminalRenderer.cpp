@@ -21,7 +21,7 @@ namespace TerminalRenderer
 
     void TerminalRenderer::render()
     {
-        auto layout_node = SceneExample::TextTestScene();
+        auto layout_node = SceneExample::textTestScene();
 
         for (int i = 0;; ++i)
         {
@@ -49,6 +49,6 @@ namespace TerminalRenderer
 
     TargetActuator TerminalRenderer::getTopLevelActuator()
     {
-        return {render_target, {{0, 0}, render_target->getExtent()}};
+        return {render_target, {.origin={0, 0}, .extent=render_target->getExtent()}};
     }
 } // namespace TerminalRenderer

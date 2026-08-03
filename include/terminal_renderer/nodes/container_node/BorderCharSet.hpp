@@ -13,11 +13,11 @@ namespace TerminalRenderer
         char32_t vertical;
     };
 
-    inline constexpr BorderCharSet LIGHT_BORDER_CHAR_SET{U'┌', U'┐', U'└', U'┘', U'─', U'│'};
-    inline constexpr BorderCharSet HEAVY_BORDER_CHAR_SET{U'┏', U'┓', U'┗', U'┛', U'━', U'┃'};
-    inline constexpr BorderCharSet DOUBLE_BORDER_CHAR_SET{U'╔', U'╗', U'╚', U'╝', U'═', U'║'};
-    inline constexpr BorderCharSet DOTTED_BORDER_CHAR_SET{U'┌', U'┐', U'└', U'┘', U'┈', U'┊'};
-    inline constexpr BorderCharSet ROUNDED_BORDER_CHAR_SET{U'╭', U'╮', U'╰', U'╯', U'─', U'│'};
+    inline constexpr BorderCharSet light_border_char_set{.top_left=U'┌', .top_right=U'┐', .bottom_left=U'└', .bottom_right=U'┘', .horizontal=U'─', .vertical=U'│'};
+    inline constexpr BorderCharSet heavy_border_char_set{.top_left=U'┏', .top_right=U'┓', .bottom_left=U'┗', .bottom_right=U'┛', .horizontal=U'━', .vertical=U'┃'};
+    inline constexpr BorderCharSet double_border_char_set{.top_left=U'╔', .top_right=U'╗', .bottom_left=U'╚', .bottom_right=U'╝', .horizontal=U'═', .vertical=U'║'};
+    inline constexpr BorderCharSet dotted_border_char_set{.top_left=U'┌', .top_right=U'┐', .bottom_left=U'└', .bottom_right=U'┘', .horizontal=U'┈', .vertical=U'┊'};
+    inline constexpr BorderCharSet rounded_border_char_set{.top_left=U'╭', .top_right=U'╮', .bottom_left=U'╰', .bottom_right=U'╯', .horizontal=U'─', .vertical=U'│'};
 } // namespace TerminalRenderer
 
 #endif // TERMINAL_RENDERER_LIBRARY_BORDERCHARSET_HPP

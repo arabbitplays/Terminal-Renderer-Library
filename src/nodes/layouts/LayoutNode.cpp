@@ -8,9 +8,9 @@ namespace TerminalRenderer
         return LayoutInfo{};
     }
 
-    void LayoutNode::render(TargetActuator& targetActuator)
+    void LayoutNode::render(TargetActuator& target_actuator)
     {
-        IVec2 extent = targetActuator.getExtent();
+        IVec2 extent = target_actuator.getExtent();
         int32_t main_size = LayoutUtil::mainAxis(extent, axis);
         int32_t cross_size = LayoutUtil::crossAxis(extent, axis);
 
@@ -26,9 +26,9 @@ namespace TerminalRenderer
                 curr += slot;
                 continue;
             }
-            TargetActuator childActuator =
-                targetActuator.createInnerTargetActuator(LayoutUtil::makeSlot(curr, slot, cross_size, axis));
-            children.at(i)->render(childActuator);
+            TargetActuator child_actuator =
+                target_actuator.createInnerTargetActuator(LayoutUtil::makeSlot(curr, slot, cross_size, axis));
+            children.at(i)->render(child_actuator);
             curr += slot;
         }
     }
@@ -38,8 +38,8 @@ namespace TerminalRenderer
         std::vector<DistributionRequest> requests{};
         for (const auto& child : children)
         {
-            LayoutInfo layoutInfo = child->getLayoutInfo();
-            requests.emplace_back(layoutInfo.scaling_mode, LayoutUtil::mainAxis(layoutInfo.requestedSize, axis));
+            LayoutInfo layout_info = child->getLayoutInfo();
+            requests.emplace_back(layout_info.scaling_mode, LayoutUtil::mainAxis(layout_info.requested_size, axis));
         }
         return LayoutUtil::distribute(LayoutUtil::mainAxis(extent, axis), requests);
     }

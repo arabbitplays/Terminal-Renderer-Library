@@ -14,7 +14,7 @@ namespace TerminalRenderer
         virtual uint32_t get256ColorIndex() = 0;
     };
 
-    typedef std::shared_ptr<Color> ColorHandle;
+    using ColorHandle = std::shared_ptr<Color>;
 } // namespace TerminalRenderer
 
 #endif // TERMINAL_RENDERER_LIBRARY_COLOR_HPP

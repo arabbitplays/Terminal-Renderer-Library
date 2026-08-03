@@ -7,18 +7,18 @@
 
 namespace TerminalRenderer
 {
-    PipeTransport::PipeTransport(const std::string& pipe_name, const std::string& tty_path) : ttyPath(tty_path)
+    PipeTransport::PipeTransport(const std::string& pipe_name, const std::string& tty_path) : tty_path(tty_path)
     {
         pipe = std::make_shared<FifoPipe>(pipe_name);
         pipe->create();
 
-        ttyFd = open(ttyPath.c_str(), O_RDONLY | O_NONBLOCK | O_NOCTTY);
-        if (ttyFd == -1)
+        tty_fd = open(tty_path.c_str(), O_RDONLY | O_NONBLOCK | O_NOCTTY);
+        if (tty_fd == -1)
         {
-            throw std::runtime_error("Failed to open target tty " + ttyPath + ": " + std::strerror(errno));
+            throw std::runtime_error("Failed to open target tty " + tty_path + ": " + std::strerror(errno));
         }
 
-        lastViewport = queryViewport();
+        last_viewport = queryViewport();
     }
 
     PipeTransport::~PipeTransport()
@@ -27,9 +27,9 @@ namespace TerminalRenderer
         {
             pipe->closePipe();
         }
-        if (ttyFd != -1)
+        if (tty_fd != -1)
         {
-            close(ttyFd);
+            close(tty_fd);
         }
     }
 
@@ -44,24 +44,24 @@ namespace TerminalRenderer
 
     Viewport PipeTransport::getViewport()
     {
-        lastViewport = queryViewport();
-        return lastViewport;
+        last_viewport = queryViewport();
+        return last_viewport;
     }
 
     void PipeTransport::setResizeCallback(ResizeCallback callback)
     {
-        resizeCallback = std::move(callback);
+        resize_callback = std::move(callback);
     }
 
     void PipeTransport::pollEvents()
     {
         const Viewport current = queryViewport();
-        if (current.extent != lastViewport.extent)
+        if (current.extent != last_viewport.extent)
         {
-            lastViewport = current;
-            if (resizeCallback)
+            last_viewport = current;
+            if (resize_callback)
             {
-                resizeCallback(current);
+                resize_callback(current);
             }
         }
     }
@@ -69,10 +69,10 @@ namespace TerminalRenderer
     Viewport PipeTransport::queryViewport() const
     {
         struct winsize ws;
-        if (ioctl(ttyFd, TIOCGWINSZ, &ws) == 0)
+        if (ioctl(tty_fd, TIOCGWINSZ, &ws) == 0)
         {
-            return {{0, 0}, {ws.ws_col, ws.ws_row}};
+            return {.origin={0, 0}, .extent={ws.ws_col, ws.ws_row}};
         }
-        return {{0, 0}, {0, 0}};
+        return {.origin={0, 0}, .extent={0, 0}};
     }
 } // namespace TerminalRenderer

@@ -7,8 +7,8 @@ namespace TerminalRenderer
     class SceneExample
     {
     public:
-        static RenderNodeHandle LayoutTestScene();
-        static RenderNodeHandle TextTestScene();
+        static RenderNodeHandle layoutTestScene();
+        static RenderNodeHandle textTestScene();
     };
 } // namespace TerminalRenderer
 
