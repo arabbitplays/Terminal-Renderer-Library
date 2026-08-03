@@ -54,8 +54,8 @@ if clang_format.found()
     run_target('format',
         command: [
             find_program('bash'),
-            meson.source_root() / 'scripts' / 'format.sh',
-            meson.source_root(),
+            meson.project_source_root() / 'scripts' / 'format.sh',
+            meson.project_source_root(),
             clang_format.full_path(),
         ]
     )
@@ -66,18 +66,18 @@ if clang_tidy.found()
     run_target('tidy',
         command: [
             find_program('bash'),
-            meson.source_root() / 'scripts' / 'tidy.sh',
-            meson.source_root(),
-            meson.build_root(),
+            meson.project_source_root() / 'scripts' / 'tidy.sh',
+            meson.project_source_root(),
+            meson.project_build_root(),
             clang_tidy.full_path(),
         ]
     )
     run_target('fix',
         command: [
             find_program('bash'),
-            meson.source_root() / 'scripts' / 'fix.sh',
-            meson.source_root(),
-            meson.build_root(),
+            meson.project_source_root() / 'scripts' / 'fix.sh',
+            meson.project_source_root(),
+            meson.project_build_root(),
             clang_tidy.full_path(),
         ]
     )
