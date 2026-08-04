@@ -6,17 +6,23 @@
 namespace TerminalRenderer
 {
     LeafBuilder<TextNode> SceneBuilder::text(
-        std::string text, std::optional<ColorHandle> fg_color, std::optional<ColorHandle> bg_color)
+        std::string text, std::optional<ColorHandle> fg_color, std::optional<ColorHandle> bg_color, TextFlowMode flow_mode)
     {
         return LeafBuilder<TextNode>{
-            std::make_shared<TextNode>(std::move(text), std::move(fg_color), std::move(bg_color))};
+            std::make_shared<TextNode>(std::move(text), std::move(fg_color), std::move(bg_color), flow_mode)};
     }
 
     static std::shared_ptr<BorderNode> makeBorder(
-        const BorderCharSet& char_set, uint32_t margin, uint32_t padding, ScalingMode scaling_mode)
+        const BorderCharSet& char_set, uint32_t margin, uint32_t padding, ScalingMode scaling_mode,
+        bool draw_border = true)
     {
-        return std::make_shared<BorderNode>(char_set, static_cast<int32_t>(margin) * IVec2{2, 1}, true,
+        return std::make_shared<BorderNode>(char_set, static_cast<int32_t>(margin) * IVec2{2, 1}, draw_border,
             static_cast<int32_t>(padding) * IVec2{2, 1}, scaling_mode);
+    }
+
+    ContainerBuilder<BorderNode> SceneBuilder::container(uint32_t margin, uint32_t padding, ScalingMode scaling_mode)
+    {
+        return ContainerBuilder<BorderNode>{makeBorder(light_border_char_set, margin, padding, scaling_mode, false)};
     }
 
     ContainerBuilder<BorderNode> SceneBuilder::lightBorder(uint32_t margin, uint32_t padding, ScalingMode scaling_mode)

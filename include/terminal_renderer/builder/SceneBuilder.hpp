@@ -9,6 +9,7 @@
 #include <terminal_renderer/nodes/GroupNode.hpp>
 #include <terminal_renderer/nodes/LeafNode.hpp>
 #include <utility>
+#include <terminal_renderer/nodes/text_node/TextFlowMode.hpp>
 
 namespace TerminalRenderer
 {
@@ -85,7 +86,10 @@ namespace TerminalRenderer
     {
     public:
         static LeafBuilder<TextNode> text(std::string text = "", std::optional<ColorHandle> fg_color = std::nullopt,
-            std::optional<ColorHandle> bg_color = std::nullopt);
+            std::optional<ColorHandle> bg_color = std::nullopt, TextFlowMode flow_mode = TextFlowMode::CUTOFF);
+
+        static ContainerBuilder<BorderNode> container(
+            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
 
         static ContainerBuilder<BorderNode> lightBorder(
             uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);

@@ -1,0 +1,14 @@
+#ifndef TERMINAL_RENDERER_LIBRARY_TEXTFLOWMODE_HPP
+#define TERMINAL_RENDERER_LIBRARY_TEXTFLOWMODE_HPP
+
+namespace TerminalRenderer
+{
+    enum class TextFlowMode
+    {
+        STATIC,
+        CUTOFF,
+        LINE_BREAK
+    };
+}
+
+#endif //TERMINAL_RENDERER_LIBRARY_TEXTFLOWMODE_HPP
