@@ -3,8 +3,8 @@
 
 namespace TerminalRenderer
 {
-    BorderNode::BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding)
-        : border_char_set(border_char_set), margin(margin), draw_border(draw_border), padding(padding)
+    BorderNode::BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding, ScalingMode scaling_mode)
+        : border_char_set(border_char_set), margin(margin), draw_border(draw_border), padding(padding), scaling_mode(scaling_mode)
     {
     }
 
@@ -38,11 +38,12 @@ namespace TerminalRenderer
     LayoutInfo BorderNode::getLayoutInfo()
     {
         LayoutInfo child_layout_info = child != nullptr ? child->getLayoutInfo() : LayoutInfo();
-        LayoutInfo layout_info;
-        layout_info.requested_size = child_layout_info.requested_size + 2 * getContentOffset();
-        layout_info.minimum_size = 2 * getContentOffset();
-        layout_info.scaling_mode = FLEXIBLE;
-        return layout_info;
+        IVec2 offset = 2 * getContentOffset();
+        return LayoutInfo{
+            child_layout_info.getRequestedSize() + offset,
+            child_layout_info.getMinimumSize() + offset,
+            scaling_mode
+        };
     }
 
     void BorderNode::drawBorder(const TargetActuator& target_actuator) const

@@ -21,7 +21,7 @@ namespace TerminalRenderer
 
     void TerminalRenderer::render()
     {
-        auto layout_node = SceneExample::textTestScene();
+        auto layout_node = SceneExample::layoutTestScene();
 
         for (int i = 0;; ++i)
         {

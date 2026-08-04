@@ -11,6 +11,7 @@ namespace TerminalRenderer
         {
             child = std::move(new_child);
         }
+
         [[nodiscard]] const RenderNodeHandle& getChild() const
         {
             return child;

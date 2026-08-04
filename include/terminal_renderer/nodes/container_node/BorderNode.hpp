@@ -9,7 +9,7 @@ namespace TerminalRenderer
     class BorderNode : public ContainerNode
     {
     public:
-        BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding);
+        BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding, ScalingMode scaling_mode);
 
         void render(TargetActuator& target_actuator) override;
         LayoutInfo getLayoutInfo() override;
@@ -18,6 +18,7 @@ namespace TerminalRenderer
         IVec2 margin;
         bool draw_border;
         IVec2 padding;
+        ScalingMode scaling_mode;
 
     private:
         void drawBorder(const TargetActuator& target_actuator) const;

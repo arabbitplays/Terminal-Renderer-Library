@@ -24,10 +24,6 @@ namespace TerminalRenderer
 
     LayoutInfo TextNode::getLayoutInfo()
     {
-        LayoutInfo layout_info;
-        layout_info.requested_size = {static_cast<int32_t>(text.size()), 1};
-        layout_info.minimum_size = {};
-        layout_info.scaling_mode = FLEXIBLE;
-        return layout_info;
+        return LayoutInfo{{static_cast<int32_t>(text.size()), 1}, {}, STATIC};
     }
 } // namespace TerminalRenderer

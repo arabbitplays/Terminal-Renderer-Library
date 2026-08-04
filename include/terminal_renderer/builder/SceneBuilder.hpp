@@ -87,11 +87,16 @@ namespace TerminalRenderer
         static LeafBuilder<TextNode> text(std::string text = "", std::optional<ColorHandle> fg_color = std::nullopt,
             std::optional<ColorHandle> bg_color = std::nullopt);
 
-        static ContainerBuilder<BorderNode> lightBorder(uint32_t margin = 0, uint32_t padding = 0);
-        static ContainerBuilder<BorderNode> heavyBorder(uint32_t margin = 0, uint32_t padding = 0);
-        static ContainerBuilder<BorderNode> doubleBorder(uint32_t margin = 0, uint32_t padding = 0);
-        static ContainerBuilder<BorderNode> dottedBorder(uint32_t margin = 0, uint32_t padding = 0);
-        static ContainerBuilder<BorderNode> roundedBorder(uint32_t margin = 0, uint32_t padding = 0);
+        static ContainerBuilder<BorderNode> lightBorder(
+            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
+        static ContainerBuilder<BorderNode> heavyBorder(
+            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
+        static ContainerBuilder<BorderNode> doubleBorder(
+            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
+        static ContainerBuilder<BorderNode> dottedBorder(
+            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
+        static ContainerBuilder<BorderNode> roundedBorder(
+            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
 
         static GroupBuilder<LayoutNode> horizontalLayout();
         static GroupBuilder<LayoutNode> verticalLayout();

@@ -12,35 +12,37 @@ namespace TerminalRenderer
             std::make_shared<TextNode>(std::move(text), std::move(fg_color), std::move(bg_color))};
     }
 
-    static std::shared_ptr<BorderNode> makeBorder(const BorderCharSet& char_set, uint32_t margin, uint32_t padding)
+    static std::shared_ptr<BorderNode> makeBorder(
+        const BorderCharSet& char_set, uint32_t margin, uint32_t padding, ScalingMode scaling_mode)
     {
-        return std::make_shared<BorderNode>(
-            char_set, static_cast<int32_t>(margin) * IVec2{2, 1}, true, static_cast<int32_t>(padding) * IVec2{2, 1});
+        return std::make_shared<BorderNode>(char_set, static_cast<int32_t>(margin) * IVec2{2, 1}, true,
+            static_cast<int32_t>(padding) * IVec2{2, 1}, scaling_mode);
     }
 
-    ContainerBuilder<BorderNode> SceneBuilder::lightBorder(uint32_t margin, uint32_t padding)
+    ContainerBuilder<BorderNode> SceneBuilder::lightBorder(uint32_t margin, uint32_t padding, ScalingMode scaling_mode)
     {
-        return ContainerBuilder<BorderNode>{makeBorder(light_border_char_set, margin, padding)};
+        return ContainerBuilder<BorderNode>{makeBorder(light_border_char_set, margin, padding, scaling_mode)};
     }
 
-    ContainerBuilder<BorderNode> SceneBuilder::heavyBorder(uint32_t margin, uint32_t padding)
+    ContainerBuilder<BorderNode> SceneBuilder::heavyBorder(uint32_t margin, uint32_t padding, ScalingMode scaling_mode)
     {
-        return ContainerBuilder<BorderNode>{makeBorder(heavy_border_char_set, margin, padding)};
+        return ContainerBuilder<BorderNode>{makeBorder(heavy_border_char_set, margin, padding, scaling_mode)};
     }
 
-    ContainerBuilder<BorderNode> SceneBuilder::doubleBorder(uint32_t margin, uint32_t padding)
+    ContainerBuilder<BorderNode> SceneBuilder::doubleBorder(uint32_t margin, uint32_t padding, ScalingMode scaling_mode)
     {
-        return ContainerBuilder<BorderNode>{makeBorder(double_border_char_set, margin, padding)};
+        return ContainerBuilder<BorderNode>{makeBorder(double_border_char_set, margin, padding, scaling_mode)};
     }
 
-    ContainerBuilder<BorderNode> SceneBuilder::dottedBorder(uint32_t margin, uint32_t padding)
+    ContainerBuilder<BorderNode> SceneBuilder::dottedBorder(uint32_t margin, uint32_t padding, ScalingMode scaling_mode)
     {
-        return ContainerBuilder<BorderNode>{makeBorder(dotted_border_char_set, margin, padding)};
+        return ContainerBuilder<BorderNode>{makeBorder(dotted_border_char_set, margin, padding, scaling_mode)};
     }
 
-    ContainerBuilder<BorderNode> SceneBuilder::roundedBorder(uint32_t margin, uint32_t padding)
+    ContainerBuilder<BorderNode> SceneBuilder::roundedBorder(
+        uint32_t margin, uint32_t padding, ScalingMode scaling_mode)
     {
-        return ContainerBuilder<BorderNode>{makeBorder(rounded_border_char_set, margin, padding)};
+        return ContainerBuilder<BorderNode>{makeBorder(rounded_border_char_set, margin, padding, scaling_mode)};
     }
 
     GroupBuilder<LayoutNode> SceneBuilder::horizontalLayout()
