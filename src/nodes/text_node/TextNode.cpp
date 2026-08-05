@@ -5,20 +5,81 @@
 
 namespace TerminalRenderer
 {
-    TextNode::TextNode(std::string text, std::optional<ColorHandle> fg_color, std::optional<ColorHandle> bg_color,
-                       TextFlowMode flow_mode)
-        : text(std::move(text)), fg_color(std::move(fg_color)), bg_color(std::move(bg_color)), flow_mode(flow_mode)
+    TextNode::TextNode(const TextLayoutOptions layout_options) : layout_options(layout_options)
     {
     }
 
     void TextNode::render(TargetActuator& target_actuator)
     {
-        IVec2 extent = target_actuator.getExtent();
-        std::vector<std::string> lines = splitToLines(text, flow_mode == TextFlowMode::LINE_BREAK,
-                                                      target_actuator.getExtent());
-        for (size_t y = 0; y < std::min(static_cast<int32_t>(lines.size()), extent.y); y++)
+        IVec2 pos = IVec2::zero;
+        for (const auto& segment : text_segments)
         {
-            renderLine(lines.at(y), static_cast<int32_t>(y), target_actuator);
+            renderSegment(pos, segment, target_actuator);
+        }
+    }
+
+    void TextNode::renderSegment(IVec2& curr_pos, const TextSegment& text_segment, TargetActuator& target_actuator)
+    {
+        Cell cell = {.c = 0, .fg_color = text_segment.fg_color, .bg_color = text_segment.bg_color};
+        const IVec2 extent = target_actuator.getExtent();
+        std::vector<std::string> lines = splitTextAt(text_segment.text, '\n');
+        for (uint32_t i = 0; i < lines.size(); i++)
+        {
+            if (curr_pos.y >= extent.y)
+            {
+                return;
+            }
+
+            renderLine(curr_pos, cell, lines.at(i), target_actuator);
+
+            if (i != lines.size() - 1)
+            {
+                curr_pos.y++;
+                curr_pos.x = 0;
+            }
+        }
+    }
+
+    void TextNode::renderLine(IVec2& curr_pos, Cell& cell, const std::string& line, TargetActuator& target_actuator)
+    {
+        IVec2 extent = target_actuator.getExtent();
+        std::vector<std::string> words = splitTextAt(line, ' ');
+        for (uint32_t i = 0; i < words.size(); i++)
+        {
+            const std::string& word = words.at(i);
+            if (layout_options.flow_mode == TextFlowMode::LINE_BREAK && curr_pos.x + word.length() > static_cast<
+                uint32_t>(extent.x))
+            {
+                curr_pos.y++;
+                curr_pos.x = 0;
+            }
+
+            if (curr_pos.y >= extent.y)
+            {
+                return;
+            }
+
+            renderWord(curr_pos, cell, word, target_actuator);
+
+            if (curr_pos.x < extent.x && i != words.size() - 1)
+            {
+                cell.c = ' ';
+                target_actuator.setCell(curr_pos, cell);
+                curr_pos.x++;
+            }
+        }
+    }
+
+    void TextNode::renderWord(IVec2& curr_pos, Cell& cell, std::string word, TargetActuator& target_actuator)
+    {
+        IVec2 extent = target_actuator.getExtent();
+        uint32_t curr_char_idx = 0;
+        while (curr_char_idx < word.length() && curr_pos.x < extent.x)
+        {
+            cell.c = word.at(curr_char_idx);
+            target_actuator.setCell(curr_pos, cell);
+            curr_pos.x++;
+            curr_char_idx++;
         }
     }
 
@@ -27,65 +88,28 @@ namespace TerminalRenderer
         return LayoutInfo{IVec2::zero, IVec2::zero, FLEXIBLE};
     }
 
-    void TextNode::renderLine(const std::string& line, int32_t y, const TargetActuator& target_actuator) const
+    void TextNode::appendTextSegment(const std::string& text, const std::optional<ColorHandle>& fg_color,
+                                     const std::optional<ColorHandle>& bg_color)
     {
-        IVec2 extent = target_actuator.getExtent();
-        int32_t x = 0;
-        Cell cell = {.c = 0, .fg_color = fg_color, .bg_color = bg_color};
-        while (x < extent.x && static_cast<uint32_t>(x) < line.size())
-        {
-            cell.c = line.at(x);
-            target_actuator.setCell({x, y}, cell);
-            x++;
-        }
+        text_segments.emplace_back(text, fg_color, bg_color);
     }
 
-    std::vector<std::string> TextNode::splitToLines(const std::string& text, bool apply_line_breaks, const IVec2 extent)
+    void TextNode::clearTextSegments()
     {
-        std::vector<std::string> lines;
+        text_segments.clear();
+    }
+
+    std::vector<std::string> TextNode::splitTextAt(const std::string& text, char c)
+    {
+        std::vector<std::string> result;
         size_t start = 0;
         for (size_t i = 0; i <= text.size(); ++i)
         {
-            if (i == text.size() || text.at(i) == '\n')
+            if (i == text.size() || text.at(i) == c)
             {
-                std::string line = text.substr(start, i - start);
-                if (apply_line_breaks && !line.empty())
-                {
-                    std::vector<std::string> broken_lines = applyLineBreaks(line, extent);
-                    lines.insert(lines.end(), broken_lines.begin(), broken_lines.end());
-                }
-                else
-                {
-                    lines.push_back(line);
-                }
+                result.push_back(text.substr(start, i - start));
                 start = i + 1;
             }
-        }
-        return lines;
-    }
-
-    std::vector<std::string> TextNode::applyLineBreaks(const std::string& line, const IVec2 extent)
-    {
-        std::vector<std::string> result{};
-        auto rest_size = static_cast<int32_t>(line.size());
-        uint32_t start = 0;
-        while (rest_size > extent.x)
-        {
-            // search backwards for a space to break at
-            size_t break_pos = line.rfind(' ', start + extent.x - 1);
-            uint32_t chunk_size = (break_pos != std::string::npos && break_pos >= start)
-                                      ? static_cast<uint32_t>(break_pos - start)
-                                      : static_cast<uint32_t>(extent.x);
-            uint32_t consumed = (break_pos != std::string::npos && break_pos >= start)
-                                    ? chunk_size + 1 // skip the space
-                                    : chunk_size;
-            result.push_back(line.substr(start, chunk_size));
-            start += consumed;
-            rest_size -= static_cast<int32_t>(consumed);
-        }
-        if (rest_size > 0)
-        {
-            result.push_back(line.substr(start));
         }
         return result;
     }

@@ -7,10 +7,14 @@
 namespace TerminalRenderer
 {
     LeafBuilder<TextNode> SceneBuilder::text(
-        std::string text, std::optional<ColorHandle> fg_color, std::optional<ColorHandle> bg_color, TextFlowMode flow_mode)
+        const std::string& text, const std::optional<ColorHandle>& fg_color, const std::optional<ColorHandle>& bg_color, TextLayoutOptions layout_options)
     {
-        return LeafBuilder<TextNode>{
-            std::make_shared<TextNode>(std::move(text), std::move(fg_color), std::move(bg_color), flow_mode)};
+        auto text_node = std::make_shared<TextNode>(layout_options);
+        if (!text.empty())
+        {
+            text_node->appendTextSegment(text, fg_color, bg_color);
+        }
+        return LeafBuilder<TextNode>{text_node};
     }
 
     static std::shared_ptr<BorderNode> makeBorder(

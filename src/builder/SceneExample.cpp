@@ -36,11 +36,21 @@ namespace TerminalRenderer
 
     RenderNodeHandle SceneExample::textTestScene()
     {
+        auto text = SceneBuilder::text("This", std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::LINE_BREAK}).build();
+        text->appendTextSegment(" is", StandardColor::create(RED));
+        text->appendTextSegment(" differently  colored ", StandardColor::create(BLUE));
+        text->appendTextSegment("and very long\n", StandardColor::create(YELLOW));
+        text->appendTextSegment("\n", StandardColor::create(YELLOW));
+        text->appendTextSegment(" text!", StandardColor::create(GREEN));
         return SceneBuilder::verticalLayout()
                .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC, .min_extent = {40, 10}})
-                   .setChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, TextFlowMode::CUTOFF).build()).build())
+                   .setChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::CUTOFF}).build()).build())
                .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC, .min_extent = {40, 10}})
-                   .setChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, TextFlowMode::LINE_BREAK).build()).build())
+                   .setChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::LINE_BREAK}).build()).build())
+               .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC, .min_extent = {40, 10}})
+                   .setChild(text).build())
+               .addChild(SceneBuilder::dottedBorder(0, 0)
+                   .setChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::LINE_BREAK}).build()).build())
                .build();
     }
 

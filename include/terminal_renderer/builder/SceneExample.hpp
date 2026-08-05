@@ -9,7 +9,7 @@ namespace TerminalRenderer
     {
     public:
         static RenderNodeHandle layoutTestScene();
-        RenderNodeHandle colorTestScene();
+        static RenderNodeHandle colorTestScene();
         static RenderNodeHandle textTestScene();
 
     private:

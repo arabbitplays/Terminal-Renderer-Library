@@ -11,6 +11,7 @@
 #include <utility>
 #include <terminal_renderer/nodes/border_node/ContainerLayoutOptions.hpp>
 #include <terminal_renderer/nodes/text_node/TextFlowMode.hpp>
+#include <terminal_renderer/nodes/text_node/TextLayoutOptions.hpp>
 
 namespace TerminalRenderer
 {
@@ -86,8 +87,8 @@ namespace TerminalRenderer
     class SceneBuilder
     {
     public:
-        static LeafBuilder<TextNode> text(std::string text = "", std::optional<ColorHandle> fg_color = std::nullopt,
-            std::optional<ColorHandle> bg_color = std::nullopt, TextFlowMode flow_mode = TextFlowMode::CUTOFF);
+        static LeafBuilder<TextNode> text(const std::string& text = "", const std::optional<ColorHandle>& fg_color = std::nullopt,
+            const std::optional<ColorHandle>& bg_color = std::nullopt, TextLayoutOptions layout_options = TextLayoutOptions::createDefault());
 
         static ContainerBuilder<BorderNode> container(
             uint32_t margin = 0, uint32_t padding = 0, ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());
