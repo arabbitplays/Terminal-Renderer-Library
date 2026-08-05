@@ -1,6 +1,6 @@
 #include <iostream>
 #include <terminal_renderer/builder/SceneExample.hpp>
-#include <terminal_renderer/nodes/container_node/BorderNode.hpp>
+#include <terminal_renderer/nodes/border_node/BorderNode.hpp>
 #include <terminal_renderer/nodes/layouts/LayoutNode.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>

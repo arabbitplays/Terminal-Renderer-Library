@@ -3,7 +3,7 @@
 #include <terminal_renderer/model/color/PaletteColor.hpp>
 #include <terminal_renderer/model/color/RgbColor.hpp>
 #include <terminal_renderer/model/color/StandardColor.hpp>
-#include <terminal_renderer/nodes/container_node/BorderNode.hpp>
+#include <terminal_renderer/nodes/border_node/BorderNode.hpp>
 #include <terminal_renderer/nodes/layouts/LayoutNode.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
 
@@ -20,7 +20,7 @@ namespace TerminalRenderer
                                    .build())
                          .build())
                .addChild(SceneBuilder::horizontalLayout()
-                         .addChild(SceneBuilder::doubleBorder(1, 1, STATIC)
+                         .addChild(SceneBuilder::doubleBorder(1, 1, ContainerLayoutOptions{.scaling_mode = STATIC})
                                    .setChild(SceneBuilder::text("Text in static container").build()).build()).build())
                .addChild(SceneBuilder::horizontalLayout()
                          .addChild(SceneBuilder::heavyBorder()
@@ -37,8 +37,10 @@ namespace TerminalRenderer
     RenderNodeHandle SceneExample::textTestScene()
     {
         return SceneBuilder::verticalLayout()
-               .addChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, TextFlowMode::CUTOFF).build())
-               .addChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, TextFlowMode::LINE_BREAK).build())
+               .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC, .min_extent = {40, 10}})
+                   .setChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, TextFlowMode::CUTOFF).build()).build())
+               .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC, .min_extent = {40, 10}})
+                   .setChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, TextFlowMode::LINE_BREAK).build()).build())
                .build();
     }
 

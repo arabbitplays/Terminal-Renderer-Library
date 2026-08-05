@@ -13,9 +13,10 @@ namespace TerminalRenderer
 
     void TextNode::render(TargetActuator& target_actuator)
     {
+        IVec2 extent = target_actuator.getExtent();
         std::vector<std::string> lines = splitToLines(text, flow_mode == TextFlowMode::LINE_BREAK,
                                                       target_actuator.getExtent());
-        for (size_t y = 0; y < lines.size(); y++)
+        for (size_t y = 0; y < std::min(static_cast<int32_t>(lines.size()), extent.y); y++)
         {
             renderLine(lines.at(y), static_cast<int32_t>(y), target_actuator);
         }
@@ -23,8 +24,7 @@ namespace TerminalRenderer
 
     LayoutInfo TextNode::getLayoutInfo()
     {
-        ScalingMode scaling_mode = flow_mode == TextFlowMode::STATIC ? STATIC : FLEXIBLE;
-        return LayoutInfo{{static_cast<int32_t>(text.size()), 1}, {}, scaling_mode};
+        return LayoutInfo{IVec2::zero, IVec2::zero, FLEXIBLE};
     }
 
     void TextNode::renderLine(const std::string& line, int32_t y, const TargetActuator& target_actuator) const

@@ -1,10 +1,10 @@
-#include <terminal_renderer/nodes/container_node/BorderNode.hpp>
+#include <terminal_renderer/nodes/border_node/BorderNode.hpp>
 #include <utility>
 
 namespace TerminalRenderer
 {
-    BorderNode::BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding, ScalingMode scaling_mode)
-        : border_char_set(border_char_set), margin(margin), draw_border(draw_border), padding(padding), scaling_mode(scaling_mode)
+    BorderNode::BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding, ContainerLayoutOptions layout_options)
+        : border_char_set(border_char_set), margin(margin), draw_border(draw_border), padding(padding), layout_options(layout_options)
     {
     }
 
@@ -35,14 +35,20 @@ namespace TerminalRenderer
         renderChild(inner_actuator);
     }
 
+    IVec2 getVectorMax(IVec2 a, IVec2 b)
+    {
+        return {std::max(a.x, b.x), std::max(a.y, b.y)};
+    }
+
     LayoutInfo BorderNode::getLayoutInfo()
     {
         LayoutInfo child_layout_info = child != nullptr ? child->getLayoutInfo() : LayoutInfo();
         IVec2 offset = 2 * getContentOffset();
+
         return LayoutInfo{
-            child_layout_info.getRequestedSize() + offset,
-            child_layout_info.getMinimumSize() + offset,
-            scaling_mode
+            getVectorMax(child_layout_info.getRequestedSize() + offset, layout_options.min_extent),
+            getVectorMax(child_layout_info.getMinimumSize() + offset, layout_options.min_extent),
+            layout_options.scaling_mode
         };
     }
 

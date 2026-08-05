@@ -9,6 +9,7 @@
 #include <terminal_renderer/nodes/GroupNode.hpp>
 #include <terminal_renderer/nodes/LeafNode.hpp>
 #include <utility>
+#include <terminal_renderer/nodes/border_node/ContainerLayoutOptions.hpp>
 #include <terminal_renderer/nodes/text_node/TextFlowMode.hpp>
 
 namespace TerminalRenderer
@@ -89,18 +90,18 @@ namespace TerminalRenderer
             std::optional<ColorHandle> bg_color = std::nullopt, TextFlowMode flow_mode = TextFlowMode::CUTOFF);
 
         static ContainerBuilder<BorderNode> container(
-            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
+            uint32_t margin = 0, uint32_t padding = 0, ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());
 
         static ContainerBuilder<BorderNode> lightBorder(
-            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
+            uint32_t margin = 0, uint32_t padding = 0, ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());
         static ContainerBuilder<BorderNode> heavyBorder(
-            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
+            uint32_t margin = 0, uint32_t padding = 0, ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());
         static ContainerBuilder<BorderNode> doubleBorder(
-            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
+            uint32_t margin = 0, uint32_t padding = 0, ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());
         static ContainerBuilder<BorderNode> dottedBorder(
-            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
+            uint32_t margin = 0, uint32_t padding = 0, ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());
         static ContainerBuilder<BorderNode> roundedBorder(
-            uint32_t margin = 0, uint32_t padding = 0, ScalingMode scaling_mode = FLEXIBLE);
+            uint32_t margin = 0, uint32_t padding = 0, ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());
 
         static GroupBuilder<LayoutNode> horizontalLayout();
         static GroupBuilder<LayoutNode> verticalLayout();
