@@ -4,6 +4,7 @@
 #include <terminal_renderer/core/IVec2.hpp>
 #include <terminal_renderer/model/Viewport.hpp>
 #include <terminal_renderer/nodes/LayoutInfo.hpp>
+#include <terminal_renderer/nodes/layouts/LayoutException.hpp>
 #include <vector>
 
 namespace TerminalRenderer
@@ -18,6 +19,7 @@ namespace TerminalRenderer
     {
         ScalingMode scaling_mode;
         uint32_t requested_size;
+        uint32_t min_size;
     };
 
     class LayoutUtil
@@ -43,54 +45,57 @@ namespace TerminalRenderer
             return Viewport{.origin = makeVec(main_offset, 0, axis), .extent = makeVec(main_size, cross_size, axis)};
         }
 
-        static std::vector<int32_t> distribute(uint32_t total_size, std::vector<DistributionRequest> requests)
+        static std::vector<uint32_t> distribute(
+            const uint32_t total_size, const std::vector<DistributionRequest>& requests)
         {
-            std::vector<int32_t> results(requests.size(), 0);
+            std::vector<uint32_t> results(requests.size(), 0);
             if (requests.empty())
             {
                 return results;
             }
 
+            auto remaining_size = static_cast<int32_t>(total_size);
+            bool has_flexible_child = false;
+            for (uint32_t i = 0; i < requests.size(); i++)
+            {
+                const auto min_size = requests.at(i).min_size;
+                has_flexible_child |= requests.at(i).scaling_mode == FLEXIBLE;
+                remaining_size -= static_cast<int32_t>(min_size);
+                results.at(i) = min_size;
+            }
+
+            if (remaining_size < 0)
+            {
+                throw LayoutException("Main slot size is too small");
+            }
+
+            if (!has_flexible_child)
+            {
+                return results;
+            }
+
+            uint32_t next_result_idx = 0;
+            while (remaining_size > 0)
+            {
+                while (requests.at(next_result_idx).scaling_mode != FLEXIBLE)
+                {
+                    next_result_idx = (next_result_idx + 1) % requests.size();
+                }
+                results.at(next_result_idx) += 1; // TODO make this dependent on requested size
+                remaining_size--;
+                next_result_idx = (next_result_idx + 1) % requests.size();
+            }
+            return results;
+        }
+
+        static uint32_t getTotalRequestedSize(const std::vector<DistributionRequest>& requests)
+        {
             uint32_t total_requested_size = 0;
             for (const auto& request : requests)
             {
                 total_requested_size += request.requested_size;
             }
-
-            if (total_requested_size <= total_size)
-            {
-                uint32_t remaining_size = total_size - total_requested_size;
-                uint32_t extra_size = remaining_size / requests.size();
-                remaining_size -= extra_size * requests.size();
-
-                for (uint32_t i = 0; i < requests.size(); i++)
-                {
-                    results.at(i) = extra_size + requests.at(i).requested_size;
-
-                    // distribute remaining size 1 by 1 over the requests
-                    if (i < remaining_size)
-                    {
-                        results.at(i)++;
-                    }
-                }
-            }
-            else
-            {
-                uint32_t overflowing_size = total_requested_size - total_size;
-                uint32_t size_to_remove = overflowing_size / requests.size();
-                overflowing_size -= size_to_remove * requests.size();
-
-                for (uint32_t i = 0; i < requests.size(); i++)
-                {
-                    results.at(i) = -size_to_remove + requests.at(i).requested_size;
-
-                    if (i < overflowing_size)
-                    {
-                        results.at(i)--;
-                    }
-                }
-            }
-            return results;
+            return total_requested_size;
         }
     };
 } // namespace TerminalRenderer

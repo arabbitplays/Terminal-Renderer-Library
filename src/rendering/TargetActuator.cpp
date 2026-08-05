@@ -1,4 +1,5 @@
 #include <cassert>
+#include <terminal_renderer/nodes/layouts/LayoutException.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <utility>
 
@@ -36,6 +37,17 @@ namespace TerminalRenderer
 
     TargetActuator TargetActuator::createInnerTargetActuator(Viewport inner_viewport) const
     {
+        IVec2 max_inner_extent = viewport.extent - inner_viewport.origin;
+        if (inner_viewport.extent.x > max_inner_extent.x || inner_viewport.extent.y > max_inner_extent.y)
+        {
+            throw LayoutException(std::format(
+                "Cannot create inner view {} from parent view {}", inner_viewport.toString(), viewport.toString()));
+        }
+
+        if (inner_viewport.extent.x <= 0 || inner_viewport.extent.y <= 0)
+        {
+            throw LayoutException("Inner viewport can not have 0 extent");
+        }
         Viewport new_viewport = {.origin = getGlobalPos(inner_viewport.origin), .extent = inner_viewport.extent};
         return TargetActuator{render_target, new_viewport};
     }

@@ -1,10 +1,12 @@
-#include <terminal_renderer/nodes/container_node/BorderNode.hpp>
+#include <terminal_renderer/nodes/border_node/BorderNode.hpp>
 #include <utility>
 
 namespace TerminalRenderer
 {
-    BorderNode::BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding)
-        : border_char_set(border_char_set), margin(margin), draw_border(draw_border), padding(padding)
+    BorderNode::BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding,
+        ContainerLayoutOptions layout_options)
+        : border_char_set(border_char_set), margin(margin), draw_border(draw_border), padding(padding),
+          layout_options(layout_options)
     {
     }
 
@@ -38,11 +40,15 @@ namespace TerminalRenderer
     LayoutInfo BorderNode::getLayoutInfo()
     {
         LayoutInfo child_layout_info = child != nullptr ? child->getLayoutInfo() : LayoutInfo();
-        LayoutInfo layout_info;
-        layout_info.requested_size = child_layout_info.requested_size + 2 * getContentOffset();
-        layout_info.minimum_size = 2 * getContentOffset();
-        layout_info.scaling_mode = FLEXIBLE;
-        return layout_info;
+        IVec2 offset = 2 * getContentOffset();
+        IVec2 requested = max(child_layout_info.getRequestedSize() + offset, layout_options.min_extent);
+
+        if (layout_options.scaling_mode == STATIC)
+        {
+            return LayoutInfo::createStatic(requested);
+        }
+        return LayoutInfo::createFlexible(
+            requested, max(child_layout_info.getMinimumSize() + offset, layout_options.min_extent));
     }
 
     void BorderNode::drawBorder(const TargetActuator& target_actuator) const

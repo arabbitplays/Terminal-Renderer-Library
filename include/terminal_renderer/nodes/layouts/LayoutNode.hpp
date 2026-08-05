@@ -18,7 +18,7 @@ namespace TerminalRenderer
         Axis axis;
 
     private:
-        std::vector<int32_t> getDistribution(IVec2 extent) const;
+        std::vector<uint32_t> getDistribution(IVec2 extent) const;
     };
 } // namespace TerminalRenderer
 
