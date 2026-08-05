@@ -85,7 +85,11 @@ namespace TerminalRenderer
 
     LayoutInfo TextNode::getLayoutInfo()
     {
-        return LayoutInfo{IVec2::zero, IVec2::zero, FLEXIBLE};
+        if (layout_options.flow_mode == TextFlowMode::STATIC)
+        {
+            return LayoutInfo::createStatic(getStaticExtent());
+        }
+        return LayoutInfo::createFlexible(IVec2::zero, IVec2::zero);
     }
 
     void TextNode::appendTextSegment(const std::string& text, const std::optional<ColorHandle>& fg_color,
@@ -112,5 +116,33 @@ namespace TerminalRenderer
             }
         }
         return result;
+    }
+
+    IVec2 TextNode::getStaticExtent()
+    {
+        if (text_segments.empty())
+        {
+            return IVec2::zero;
+        }
+
+        int32_t line_count = 1;
+        int32_t max_line_length = 0;
+        int32_t last_line_length = 0;
+        for (const auto& segment : text_segments)
+        {
+            std::vector<std::string> lines = splitTextAt(segment.text, '\n');
+            line_count += static_cast<int32_t>(lines.size() - 1); // the first line is always merged with the last one
+
+            for (uint32_t i = 0; i < lines.size(); i++)
+            {
+                int32_t line_len = static_cast<int32_t>(lines.at(i).length());
+                int32_t effective = (i == 0) ? last_line_length + line_len : line_len;
+                max_line_length = std::max(max_line_length, effective);
+            }
+            last_line_length = lines.size() == 1
+                                   ? last_line_length + static_cast<int32_t>(lines.back().length())
+                                   : static_cast<int32_t>(lines.back().length());
+        }
+        return IVec2{max_line_length, line_count};
     }
 } // namespace TerminalRenderer

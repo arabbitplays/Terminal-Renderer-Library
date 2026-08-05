@@ -14,9 +14,15 @@ namespace TerminalRenderer
     {
     public:
         LayoutInfo() = default;
-        LayoutInfo(IVec2 requested_size, IVec2 minimum_size, ScalingMode scaling_mode = FLEXIBLE)
-            : requested_size(requested_size), minimum_size(minimum_size), scaling_mode(scaling_mode)
+
+        static LayoutInfo createStatic(IVec2 requested_size)
         {
+            return LayoutInfo{requested_size, requested_size, STATIC};
+        }
+
+        static LayoutInfo createFlexible(IVec2 requested_size, IVec2 minimum_size)
+        {
+            return LayoutInfo{requested_size, minimum_size, FLEXIBLE};
         }
 
         IVec2 getRequestedSize() const { return requested_size; }
@@ -27,6 +33,11 @@ namespace TerminalRenderer
         ScalingMode getScalingMode() const { return scaling_mode; }
 
     private:
+        LayoutInfo(IVec2 requested_size, IVec2 minimum_size, ScalingMode scaling_mode)
+            : requested_size(requested_size), minimum_size(minimum_size), scaling_mode(scaling_mode)
+        {
+        }
+
         IVec2 requested_size{};
         IVec2 minimum_size{};
         ScalingMode scaling_mode = FLEXIBLE;

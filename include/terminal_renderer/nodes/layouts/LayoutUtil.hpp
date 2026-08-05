@@ -79,7 +79,7 @@ namespace TerminalRenderer
             {
                 while (requests.at(next_result_idx).scaling_mode != FLEXIBLE)
                 {
-                    next_result_idx++;
+                    next_result_idx = (next_result_idx + 1) % requests.size();
                 }
                 results.at(next_result_idx) += 1; // TODO make this dependent on requested size
                 remaining_size--;

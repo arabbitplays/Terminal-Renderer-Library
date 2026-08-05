@@ -6,17 +6,39 @@ namespace TerminalRenderer
 {
     LayoutInfo LayoutNode::getLayoutInfo()
     {
-        IVec2 requested{};
-        IVec2 minimum{};
+        if (children.empty())
+        {
+            return LayoutInfo::createFlexible(IVec2::zero, IVec2::zero);
+        }
+
+        int32_t requested_main = 0;
+        int32_t requested_cross = 0;
+        int32_t minimum_main = 0;
+        int32_t minimum_cross = LayoutUtil::crossAxis(children.at(0)->getLayoutInfo().getMinimumSize(), axis);
+        ScalingMode scaling_mode = STATIC;
         for (const auto& child : children)
         {
             LayoutInfo child_layout_info = child->getLayoutInfo();
             IVec2 child_requested = child_layout_info.getRequestedSize();
             IVec2 child_minimum = child_layout_info.getMinimumSize();
-            requested = {std::max(child_requested.x, requested.x), std::max(child_requested.y, requested.y)};
-            minimum = {std::min(child_minimum.x, minimum.x), std::min(child_minimum.y, minimum.y)};
+            requested_main += LayoutUtil::mainAxis(child_requested, axis);
+            requested_cross = std::max(requested_cross, LayoutUtil::crossAxis(child_requested, axis));
+            minimum_main += LayoutUtil::mainAxis(child_minimum, axis);
+            minimum_cross = std::max(minimum_cross, LayoutUtil::crossAxis(child_minimum, axis));
+            if (child_layout_info.getScalingMode() == FLEXIBLE)
+            {
+                scaling_mode = FLEXIBLE;
+            }
         }
-        return LayoutInfo{requested, minimum};
+        IVec2 requested = LayoutUtil::makeVec(requested_main, requested_cross, axis);
+        if (scaling_mode == STATIC)
+        {
+            return LayoutInfo::createStatic(requested);
+        }
+        return LayoutInfo::createFlexible(
+            requested,
+            LayoutUtil::makeVec(minimum_main, minimum_cross, axis)
+        );
     }
 
     void LayoutNode::render(TargetActuator& target_actuator)

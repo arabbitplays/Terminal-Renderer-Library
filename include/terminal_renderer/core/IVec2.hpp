@@ -1,6 +1,7 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_IVEC2_H
 #define TERMINAL_RENDERER_LIBRARY_IVEC2_H
 
+#include <algorithm>
 #include <cstdint>
 #include <functional>
 
@@ -68,6 +69,16 @@ namespace TerminalRenderer
     constexpr IVec2 operator*(int32_t scalar, const IVec2& vec)
     {
         return vec * scalar;
+    }
+
+    constexpr IVec2 max(const IVec2& a, const IVec2& b)
+    {
+        return {std::max(a.x, b.x), std::max(a.y, b.y)};
+    }
+
+    constexpr IVec2 min(const IVec2& a, const IVec2& b)
+    {
+        return {std::min(a.x, b.x), std::min(a.y, b.y)};
     }
 } // namespace TerminalRenderer
 

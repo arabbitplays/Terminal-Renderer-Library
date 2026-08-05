@@ -36,21 +36,48 @@ namespace TerminalRenderer
 
     RenderNodeHandle SceneExample::textTestScene()
     {
-        auto text = SceneBuilder::text("This", std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::LINE_BREAK}).build();
-        text->appendTextSegment(" is", StandardColor::create(RED));
-        text->appendTextSegment(" differently  colored ", StandardColor::create(BLUE));
-        text->appendTextSegment("and very long\n", StandardColor::create(YELLOW));
-        text->appendTextSegment("\n", StandardColor::create(YELLOW));
-        text->appendTextSegment(" text!", StandardColor::create(GREEN));
+        auto multi_color_text = SceneBuilder::text("This", std::nullopt, std::nullopt,
+                                                   {.flow_mode = TextFlowMode::LINE_BREAK}).
+            build();
+        multi_color_text->appendTextSegment(" is", StandardColor::create(RED));
+        multi_color_text->appendTextSegment(" differently  colored ", StandardColor::create(BLUE));
+        multi_color_text->appendTextSegment("and very long\n", StandardColor::create(YELLOW));
+        multi_color_text->appendTextSegment("\n", StandardColor::create(YELLOW));
+        multi_color_text->appendTextSegment(" text!", StandardColor::create(GREEN));
+        auto line_break_text = SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt,
+                                                  {.flow_mode = TextFlowMode::LINE_BREAK}).build();
+        auto cutoff_text = SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt,
+                                              {.flow_mode = TextFlowMode::CUTOFF}).build();
+        auto static_text = SceneBuilder::text("This is some\n\nstatic text", std::nullopt, std::nullopt,
+                                              {.flow_mode = TextFlowMode::STATIC}).build();
+        static_text->appendTextSegment(" split over two\nsegments");
         return SceneBuilder::verticalLayout()
-               .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC, .min_extent = {40, 10}})
-                   .setChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::CUTOFF}).build()).build())
-               .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC, .min_extent = {40, 10}})
-                   .setChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::LINE_BREAK}).build()).build())
-               .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC, .min_extent = {40, 10}})
-                   .setChild(text).build())
-               .addChild(SceneBuilder::dottedBorder(0, 0)
-                   .setChild(SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::LINE_BREAK}).build()).build())
+               .addChild(static_text)
+               .addChild(SceneBuilder::horizontalLayout()
+                         .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{
+                                                                  .scaling_mode = STATIC
+                                                              })
+                                   .setChild(static_text).build())
+                         .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{
+                                                                  .scaling_mode = STATIC, .min_extent = {40, 10}
+                                                              })
+                                   .setChild(cutoff_text).build()).build())
+               .addChild(SceneBuilder::horizontalLayout()
+                         .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{
+                                                                  .scaling_mode = STATIC, .min_extent = {40, 10}
+                                                              })
+                                   .setChild(line_break_text).build())
+                         .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{
+                                                                  .scaling_mode = STATIC, .min_extent = {40, 15}
+                                                              })
+                                   .setChild(multi_color_text).build()).build())
+               .addChild(SceneBuilder::horizontalLayout()
+                         .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{
+                                                                  .scaling_mode = STATIC, .min_extent = {50, 10}
+                                                              })
+                                   .setChild(line_break_text).build())
+                         .addChild(SceneBuilder::dottedBorder(0, 0)
+                                   .setChild(line_break_text).build()).build())
                .build();
     }
 

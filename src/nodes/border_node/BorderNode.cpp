@@ -35,21 +35,20 @@ namespace TerminalRenderer
         renderChild(inner_actuator);
     }
 
-    IVec2 getVectorMax(IVec2 a, IVec2 b)
-    {
-        return {std::max(a.x, b.x), std::max(a.y, b.y)};
-    }
-
     LayoutInfo BorderNode::getLayoutInfo()
     {
         LayoutInfo child_layout_info = child != nullptr ? child->getLayoutInfo() : LayoutInfo();
         IVec2 offset = 2 * getContentOffset();
+        IVec2 requested = max(child_layout_info.getRequestedSize() + offset, layout_options.min_extent);
 
-        return LayoutInfo{
-            getVectorMax(child_layout_info.getRequestedSize() + offset, layout_options.min_extent),
-            getVectorMax(child_layout_info.getMinimumSize() + offset, layout_options.min_extent),
-            layout_options.scaling_mode
-        };
+        if (layout_options.scaling_mode == STATIC)
+        {
+            return LayoutInfo::createStatic(requested);
+        }
+        return LayoutInfo::createFlexible(
+            requested,
+            max(child_layout_info.getMinimumSize() + offset, layout_options.min_extent)
+        );
     }
 
     void BorderNode::drawBorder(const TargetActuator& target_actuator) const

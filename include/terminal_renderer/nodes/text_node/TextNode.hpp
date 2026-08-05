@@ -21,17 +21,16 @@ namespace TerminalRenderer
         void appendTextSegment(const std::string& text, const std::optional<ColorHandle>& fg_color = std::nullopt, const std::optional<ColorHandle>& bg_color = std::nullopt);
         void clearTextSegments();
 
+        TextLayoutOptions layout_options;
+
     private:
         void renderSegment(IVec2& curr_pos, const TextSegment& text_segment, TargetActuator& target_actuator);
         void renderLine(IVec2& curr_pos, Cell& cell, const std::string& line, TargetActuator& target_actuator);
         void renderWord(IVec2& curr_pos, Cell& cell, std::string word, TargetActuator& target_actuator);
 
         static std::vector<std::string> splitTextAt(const std::string& text, char c);
+        IVec2 getStaticExtent();
 
-    public:
-        TextLayoutOptions layout_options;
-
-    private:
         std::vector<TextSegment> text_segments{};
     };
 } // namespace TerminalRenderer
