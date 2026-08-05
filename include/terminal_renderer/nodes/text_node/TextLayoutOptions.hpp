@@ -12,6 +12,6 @@ namespace TerminalRenderer
             return {.flow_mode = TextFlowMode::CUTOFF};
         }
     };
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_TEXTLAYOUTOPTIONS_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_TEXTLAYOUTOPTIONS_HPP

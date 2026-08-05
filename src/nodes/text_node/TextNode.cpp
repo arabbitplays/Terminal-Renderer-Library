@@ -1,7 +1,7 @@
 #include <cstdint>
+#include <terminal_renderer/nodes/text_node/TextFlowMode.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <utility>
-#include <terminal_renderer/nodes/text_node/TextFlowMode.hpp>
 
 namespace TerminalRenderer
 {
@@ -47,8 +47,8 @@ namespace TerminalRenderer
         for (uint32_t i = 0; i < words.size(); i++)
         {
             const std::string& word = words.at(i);
-            if (layout_options.flow_mode == TextFlowMode::LINE_BREAK && curr_pos.x + word.length() > static_cast<
-                uint32_t>(extent.x))
+            if (layout_options.flow_mode == TextFlowMode::LINE_BREAK &&
+                curr_pos.x + word.length() > static_cast<uint32_t>(extent.x))
             {
                 curr_pos.y++;
                 curr_pos.x = 0;
@@ -92,8 +92,8 @@ namespace TerminalRenderer
         return LayoutInfo::createFlexible(IVec2::zero, IVec2::zero);
     }
 
-    void TextNode::appendTextSegment(const std::string& text, const std::optional<ColorHandle>& fg_color,
-                                     const std::optional<ColorHandle>& bg_color)
+    void TextNode::appendTextSegment(
+        const std::string& text, const std::optional<ColorHandle>& fg_color, const std::optional<ColorHandle>& bg_color)
     {
         text_segments.emplace_back(text, fg_color, bg_color);
     }
@@ -135,13 +135,12 @@ namespace TerminalRenderer
 
             for (uint32_t i = 0; i < lines.size(); i++)
             {
-                int32_t line_len = static_cast<int32_t>(lines.at(i).length());
+                auto line_len = static_cast<int32_t>(lines.at(i).length());
                 int32_t effective = (i == 0) ? last_line_length + line_len : line_len;
                 max_line_length = std::max(max_line_length, effective);
             }
-            last_line_length = lines.size() == 1
-                                   ? last_line_length + static_cast<int32_t>(lines.back().length())
-                                   : static_cast<int32_t>(lines.back().length());
+            last_line_length = lines.size() == 1 ? last_line_length + static_cast<int32_t>(lines.back().length())
+                                                 : static_cast<int32_t>(lines.back().length());
         }
         return IVec2{max_line_length, line_count};
     }

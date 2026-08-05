@@ -45,8 +45,8 @@ namespace TerminalRenderer
             return Viewport{.origin = makeVec(main_offset, 0, axis), .extent = makeVec(main_size, cross_size, axis)};
         }
 
-        static std::vector<uint32_t> distribute(const uint32_t total_size,
-                                                const std::vector<DistributionRequest>& requests)
+        static std::vector<uint32_t> distribute(
+            const uint32_t total_size, const std::vector<DistributionRequest>& requests)
         {
             std::vector<uint32_t> results(requests.size(), 0);
             if (requests.empty())

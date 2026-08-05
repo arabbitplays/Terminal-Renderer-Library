@@ -35,10 +35,7 @@ namespace TerminalRenderer
         {
             return LayoutInfo::createStatic(requested);
         }
-        return LayoutInfo::createFlexible(
-            requested,
-            LayoutUtil::makeVec(minimum_main, minimum_cross, axis)
-        );
+        return LayoutInfo::createFlexible(requested, LayoutUtil::makeVec(minimum_main, minimum_cross, axis));
     }
 
     void LayoutNode::render(TargetActuator& target_actuator)
@@ -67,9 +64,8 @@ namespace TerminalRenderer
             {
                 throw LayoutException("Available cross size is too small");
             }
-            TargetActuator child_actuator =
-                target_actuator.createInnerTargetActuator(
-                    LayoutUtil::makeSlot(curr, slot_main_size, slot_cross_size, axis));
+            TargetActuator child_actuator = target_actuator.createInnerTargetActuator(
+                LayoutUtil::makeSlot(curr, slot_main_size, slot_cross_size, axis));
             children.at(i)->render(child_actuator);
             curr += slot_main_size;
         }
@@ -82,8 +78,8 @@ namespace TerminalRenderer
         {
             LayoutInfo layout_info = child->getLayoutInfo();
             requests.emplace_back(layout_info.getScalingMode(),
-                                  LayoutUtil::mainAxis(layout_info.getRequestedSize(), axis),
-                                  LayoutUtil::mainAxis(layout_info.getMinimumSize(), axis));
+                LayoutUtil::mainAxis(layout_info.getRequestedSize(), axis),
+                LayoutUtil::mainAxis(layout_info.getMinimumSize(), axis));
         }
         return LayoutUtil::distribute(LayoutUtil::mainAxis(extent, axis), requests);
     }

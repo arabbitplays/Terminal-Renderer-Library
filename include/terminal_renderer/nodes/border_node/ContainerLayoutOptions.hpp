@@ -8,13 +8,13 @@ namespace TerminalRenderer
     struct ContainerLayoutOptions
     {
         ScalingMode scaling_mode = FLEXIBLE;
-        IVec2 min_extent{};
+        IVec2 min_extent;
 
         static ContainerLayoutOptions createDefault()
         {
             return {.scaling_mode = FLEXIBLE, .min_extent = IVec2::zero};
         }
     };
-}
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_CONTAINERLAYOUTOPTIONS_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_CONTAINERLAYOUTOPTIONS_HPP

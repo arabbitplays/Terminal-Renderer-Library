@@ -25,12 +25,21 @@ namespace TerminalRenderer
             return LayoutInfo{requested_size, minimum_size, FLEXIBLE};
         }
 
-        IVec2 getRequestedSize() const { return requested_size; }
+        IVec2 getRequestedSize() const
+        {
+            return requested_size;
+        }
 
         // A STATIC layout cannot shrink below its requested size.
-        IVec2 getMinimumSize() const { return scaling_mode == STATIC ? requested_size : minimum_size; }
+        IVec2 getMinimumSize() const
+        {
+            return scaling_mode == STATIC ? requested_size : minimum_size;
+        }
 
-        ScalingMode getScalingMode() const { return scaling_mode; }
+        ScalingMode getScalingMode() const
+        {
+            return scaling_mode;
+        }
 
     private:
         LayoutInfo(IVec2 requested_size, IVec2 minimum_size, ScalingMode scaling_mode)
@@ -38,8 +47,8 @@ namespace TerminalRenderer
         {
         }
 
-        IVec2 requested_size{};
-        IVec2 minimum_size{};
+        IVec2 requested_size;
+        IVec2 minimum_size;
         ScalingMode scaling_mode = FLEXIBLE;
     };
 } // namespace TerminalRenderer

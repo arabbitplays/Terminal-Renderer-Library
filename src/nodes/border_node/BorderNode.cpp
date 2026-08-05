@@ -3,8 +3,10 @@
 
 namespace TerminalRenderer
 {
-    BorderNode::BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding, ContainerLayoutOptions layout_options)
-        : border_char_set(border_char_set), margin(margin), draw_border(draw_border), padding(padding), layout_options(layout_options)
+    BorderNode::BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding,
+        ContainerLayoutOptions layout_options)
+        : border_char_set(border_char_set), margin(margin), draw_border(draw_border), padding(padding),
+          layout_options(layout_options)
     {
     }
 
@@ -46,9 +48,7 @@ namespace TerminalRenderer
             return LayoutInfo::createStatic(requested);
         }
         return LayoutInfo::createFlexible(
-            requested,
-            max(child_layout_info.getMinimumSize() + offset, layout_options.min_extent)
-        );
+            requested, max(child_layout_info.getMinimumSize() + offset, layout_options.min_extent));
     }
 
     void BorderNode::drawBorder(const TargetActuator& target_actuator) const

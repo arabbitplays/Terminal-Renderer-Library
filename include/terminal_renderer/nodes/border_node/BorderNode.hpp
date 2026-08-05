@@ -10,7 +10,8 @@ namespace TerminalRenderer
     class BorderNode : public ContainerNode
     {
     public:
-        BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding, ContainerLayoutOptions layout_options);
+        BorderNode(BorderCharSet border_char_set, IVec2 margin, bool draw_border, IVec2 padding,
+            ContainerLayoutOptions layout_options);
 
         void render(TargetActuator& target_actuator) override;
         LayoutInfo getLayoutInfo() override;

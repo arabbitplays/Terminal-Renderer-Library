@@ -1,7 +1,7 @@
 #include <cassert>
+#include <terminal_renderer/nodes/layouts/LayoutException.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <utility>
-#include <terminal_renderer/nodes/layouts/LayoutException.hpp>
 
 namespace TerminalRenderer
 {
@@ -40,7 +40,8 @@ namespace TerminalRenderer
         IVec2 max_inner_extent = viewport.extent - inner_viewport.origin;
         if (inner_viewport.extent.x > max_inner_extent.x || inner_viewport.extent.y > max_inner_extent.y)
         {
-            throw LayoutException(std::format("Cannot create inner view {} from parent view {}", inner_viewport.toString(), viewport.toString()));
+            throw LayoutException(std::format(
+                "Cannot create inner view {} from parent view {}", inner_viewport.toString(), viewport.toString()));
         }
 
         if (inner_viewport.extent.x <= 0 || inner_viewport.extent.y <= 0)
