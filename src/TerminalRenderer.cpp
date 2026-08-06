@@ -1,19 +1,11 @@
-#include <iostream>
-#include <terminal_renderer/builder/SceneExample.hpp>
 #include <terminal_renderer/nodes/border_node/BorderNode.hpp>
 #include <terminal_renderer/nodes/layouts/LayoutNode.hpp>
-#include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <terminal_renderer/TerminalRenderer.hpp>
 #include <terminal_renderer/transport/StdOutTransport.hpp>
-#include <thread>
 
 namespace TerminalRenderer
 {
-    TerminalRenderer::TerminalRenderer() : TerminalRenderer(std::make_shared<StdOutTransport>())
-    {
-    }
-
     TerminalRenderer::TerminalRenderer(const TransportHandle& transport) : transport(transport), blitter(transport)
     {
         init();
@@ -21,18 +13,17 @@ namespace TerminalRenderer
 
     void TerminalRenderer::render()
     {
-        auto layout_node = SceneExample::textTestScene();
+        transport->pollEvents();
+        TargetActuator actuator = getTopLevelActuator();
 
-        for (int i = 0;; ++i)
-        {
-            transport->pollEvents();
-            TargetActuator actuator = getTopLevelActuator();
+        root_node->render(actuator);
 
-            layout_node->render(actuator);
+        blitter.blit(render_target);
+    }
 
-            blitter.blit(render_target);
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
-        }
+    void TerminalRenderer::setRootNode(const RenderNodeHandle& root_node)
+    {
+        this->root_node = root_node;
     }
 
     void TerminalRenderer::init()
