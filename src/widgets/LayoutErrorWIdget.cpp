@@ -10,7 +10,7 @@ namespace TerminalRenderer
     LayoutErrorWidget::LayoutErrorWidget()
     {
         error_text = SceneBuilder::text({.flow_mode = TextFlowMode::STATIC}).build();
-        root = SceneBuilder::verticalLayout()
+        root = SceneBuilder::scene()
                .addChild(SceneBuilder::roundedBorder(0, 1, {.scaling_mode = STATIC}).setChild(error_text).build())
                .build();
     }

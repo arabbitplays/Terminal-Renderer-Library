@@ -109,6 +109,8 @@ namespace TerminalRenderer
 
         static GroupBuilder<LayoutNode> horizontalLayout();
         static GroupBuilder<LayoutNode> verticalLayout();
+
+        static GroupBuilder<LayoutNode> scene();
     };
 } // namespace TerminalRenderer
 

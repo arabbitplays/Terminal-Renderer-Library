@@ -11,7 +11,7 @@ namespace TerminalRenderer
 {
     RenderNodeHandle SceneExample::layoutTestScene()
     {
-        return SceneBuilder::verticalLayout()
+        return SceneBuilder::scene()
             .addChild(SceneBuilder::text("Static text").build())
             .addChild(SceneBuilder::roundedBorder()
                     .setChild(SceneBuilder::horizontalLayout()
@@ -54,7 +54,7 @@ namespace TerminalRenderer
             "This is some\n\nstatic text", std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::STATIC})
                                .build();
         static_text->appendTextSegment(" split over two\nsegments");
-        return SceneBuilder::verticalLayout()
+        return SceneBuilder::scene()
             .addChild(static_text)
             .addChild(SceneBuilder::horizontalLayout()
                     .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC})
@@ -87,7 +87,7 @@ namespace TerminalRenderer
 
     RenderNodeHandle SceneExample::colorTestScene()
     {
-        return SceneBuilder::verticalLayout()
+        return SceneBuilder::scene()
             .addChild(SceneBuilder::text("Default colors").build())
 
             .addChild(SceneBuilder::text("Standard BLACK", StandardColor::create(BLACK)).build())

@@ -74,4 +74,9 @@ namespace TerminalRenderer
     {
         return GroupBuilder<LayoutNode>{std::make_shared<LayoutNode>(Axis::Vertical)};
     }
+
+    GroupBuilder<LayoutNode> SceneBuilder::scene()
+    {
+        return verticalLayout();
+    }
 } // namespace TerminalRenderer
