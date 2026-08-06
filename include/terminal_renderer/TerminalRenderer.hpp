@@ -8,6 +8,8 @@
 #include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <terminal_renderer/rendering/TargetBlitter.hpp>
 
+#include "widgets/Widget.hpp"
+
 namespace TerminalRenderer
 {
     class TerminalRenderer
@@ -24,12 +26,16 @@ namespace TerminalRenderer
         void initRenderTarget(const IVec2& extent);
         TargetActuator getTopLevelActuator();
 
+        void updateWidgets() const;
+        void collectWidgets(const RenderNodeHandle& node);
+
         TransportHandle transport;
         TargetBlitter blitter;
 
         RenderTargetHandle render_target;
 
         RenderNodeHandle root_node;
+        std::vector<WidgetHandle> widgets;
     };
 
     using RendererHandle = std::shared_ptr<TerminalRenderer>;

@@ -5,6 +5,7 @@ subdir('model')
 subdir('nodes')
 subdir('rendering')
 subdir('transport')
+subdir('widgets')
 
 src += files(
   'TerminalRenderer.cpp',

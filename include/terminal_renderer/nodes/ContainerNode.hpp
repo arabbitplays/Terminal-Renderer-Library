@@ -20,6 +20,8 @@ namespace TerminalRenderer
     protected:
         RenderNodeHandle child;
     };
+
+    using ContainerHandle = std::shared_ptr<ContainerNode>;
 } // namespace TerminalRenderer
 
 #endif // TERMINAL_RENDERER_LIBRARY_CONTAINERNODE_HPP
