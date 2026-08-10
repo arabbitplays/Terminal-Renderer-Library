@@ -11,6 +11,11 @@ namespace TerminalRenderer
         init();
     }
 
+    void TerminalRenderer::start()
+    {
+        startWidgets();
+    }
+
     void TerminalRenderer::render()
     {
         transport->pollEvents();
@@ -43,6 +48,14 @@ namespace TerminalRenderer
     TargetActuator TerminalRenderer::getTopLevelActuator()
     {
         return {render_target, {.origin = {0, 0}, .extent = render_target->getExtent()}};
+    }
+
+    void TerminalRenderer::startWidgets() const
+    {
+        for (const auto& widget : widgets)
+        {
+            widget->onStart();
+        }
     }
 
     void TerminalRenderer::updateWidgets() const

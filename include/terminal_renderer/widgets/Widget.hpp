@@ -7,7 +7,8 @@ namespace TerminalRenderer
     class Widget : public RenderNode
     {
     public:
-        virtual void onUpdate() = 0;
+        virtual void onStart() {}
+        virtual void onUpdate() {}
 
         void render(TargetActuator& target_actuator) override
         {

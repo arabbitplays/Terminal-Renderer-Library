@@ -16,6 +16,7 @@ namespace TerminalRenderer
         explicit TerminalRenderer(const TransportHandle& transport);
         ~TerminalRenderer() = default;
 
+        void start();
         void render();
         void setRootNode(const RenderNodeHandle& root_node);
 
@@ -24,6 +25,7 @@ namespace TerminalRenderer
         void initRenderTarget(const IVec2& extent);
         TargetActuator getTopLevelActuator();
 
+        void startWidgets() const;
         void updateWidgets() const;
         void collectWidgets(const RenderNodeHandle& node);
 
