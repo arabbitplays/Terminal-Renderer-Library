@@ -45,6 +45,7 @@ namespace TerminalRenderer
         multi_color_text->appendTextSegment("and very long\n", StandardColor::create(YELLOW));
         multi_color_text->appendTextSegment("\n", StandardColor::create(YELLOW));
         multi_color_text->appendTextSegment(" text!", StandardColor::create(GREEN));
+        multi_color_text->appendTextSegment(" ✓ ⤫ → ★ é ñ 你好", StandardColor::create(MAGENTA));
         auto line_break_text =
             SceneBuilder::text(lorem_ipsum, std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::LINE_BREAK})
                 .build();
@@ -54,8 +55,15 @@ namespace TerminalRenderer
             "This is some\n\nstatic text", std::nullopt, std::nullopt, {.flow_mode = TextFlowMode::STATIC})
                                .build();
         static_text->appendTextSegment(" split over two\nsegments");
+        auto unicode_text = SceneBuilder::text(
+            "Unicode: ✓ ⤫ → ★\néàü — ñ ç\n你好 世界", std::nullopt, std::nullopt,
+            {.flow_mode = TextFlowMode::STATIC})
+                                .build();
         return SceneBuilder::scene()
             .addChild(static_text)
+            .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC})
+                    .setChild(unicode_text)
+                    .build())
             .addChild(SceneBuilder::horizontalLayout()
                     .addChild(SceneBuilder::dottedBorder(0, 0, ContainerLayoutOptions{.scaling_mode = STATIC})
                             .setChild(static_text)

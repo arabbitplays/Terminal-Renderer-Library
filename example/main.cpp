@@ -6,7 +6,7 @@
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
-    auto scene = std::make_shared<TerminalRenderer::LayoutErrorWidget>();
+    auto scene = TerminalRenderer::SceneExample::textTestScene();
     auto renderer = TerminalRenderer::RendererBuilder().scene(scene).build();
     while (true)
     {

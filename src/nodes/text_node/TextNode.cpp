@@ -1,4 +1,5 @@
 #include <cstdint>
+#include <terminal_renderer/core/Utf8Util.hpp>
 #include <terminal_renderer/nodes/text_node/TextFlowMode.hpp>
 #include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <utility>
@@ -49,7 +50,7 @@ namespace TerminalRenderer
         {
             const std::string& word = words.at(i);
             if (layout_options.flow_mode == TextFlowMode::LINE_BREAK &&
-                curr_pos.x + word.length() > static_cast<uint32_t>(extent.x))
+                curr_pos.x + Utf8Util::codepointCount(word) > static_cast<uint32_t>(extent.x))
             {
                 curr_pos.y++;
                 curr_pos.x = 0;
@@ -74,13 +75,12 @@ namespace TerminalRenderer
     void TextNode::renderWord(IVec2& curr_pos, Cell& cell, std::string word, TargetActuator& target_actuator)
     {
         IVec2 extent = target_actuator.getExtent();
-        uint32_t curr_char_idx = 0;
-        while (curr_char_idx < word.length() && curr_pos.x < extent.x)
+        size_t byte_pos = 0;
+        while (byte_pos < word.size() && curr_pos.x < extent.x)
         {
-            cell.c = word.at(curr_char_idx);
+            cell.c = Utf8Util::nextCodepoint(word, byte_pos);
             target_actuator.setCell(curr_pos, cell);
             curr_pos.x++;
-            curr_char_idx++;
         }
     }
 
@@ -136,12 +136,13 @@ namespace TerminalRenderer
 
             for (uint32_t i = 0; i < lines.size(); i++)
             {
-                auto line_len = static_cast<int32_t>(lines.at(i).length());
+                auto line_len = static_cast<int32_t>(Utf8Util::codepointCount(lines.at(i)));
                 int32_t effective = (i == 0) ? last_line_length + line_len : line_len;
                 max_line_length = std::max(max_line_length, effective);
             }
-            last_line_length = lines.size() == 1 ? last_line_length + static_cast<int32_t>(lines.back().length())
-                                                 : static_cast<int32_t>(lines.back().length());
+            last_line_length = lines.size() == 1
+                ? last_line_length + static_cast<int32_t>(Utf8Util::codepointCount(lines.back()))
+                : static_cast<int32_t>(Utf8Util::codepointCount(lines.back()));
         }
         return IVec2{max_line_length, line_count};
     }
