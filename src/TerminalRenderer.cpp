@@ -1,38 +1,45 @@
-#include <iostream>
-#include <terminal_renderer/builder/SceneExample.hpp>
 #include <terminal_renderer/nodes/border_node/BorderNode.hpp>
 #include <terminal_renderer/nodes/layouts/LayoutNode.hpp>
-#include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <terminal_renderer/TerminalRenderer.hpp>
 #include <terminal_renderer/transport/StdOutTransport.hpp>
-#include <thread>
 
 namespace TerminalRenderer
 {
-    TerminalRenderer::TerminalRenderer() : TerminalRenderer(std::make_shared<StdOutTransport>())
-    {
-    }
-
     TerminalRenderer::TerminalRenderer(const TransportHandle& transport) : transport(transport), blitter(transport)
     {
         init();
     }
 
+    void TerminalRenderer::start()
+    {
+        startWidgets();
+    }
+
     void TerminalRenderer::render()
     {
-        auto layout_node = SceneExample::textTestScene();
+        transport->pollEvents();
+        TargetActuator actuator = getTopLevelActuator();
 
-        for (int i = 0;; ++i)
+        updateWidgets();
+
+        try
         {
-            transport->pollEvents();
-            TargetActuator actuator = getTopLevelActuator();
-
-            layout_node->render(actuator);
-
-            blitter.blit(render_target);
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            root_node->render(actuator);
         }
+        catch (LayoutException& layout_exception)
+        {
+            layout_error_widget->onUpdate();
+            layout_error_widget->render(actuator);
+        }
+
+        blitter.blit(render_target);
+    }
+
+    void TerminalRenderer::setRootNode(const RenderNodeHandle& root_node)
+    {
+        this->root_node = root_node;
+        collectWidgets(root_node);
     }
 
     void TerminalRenderer::init()
@@ -40,6 +47,7 @@ namespace TerminalRenderer
         transport->setResizeCallback([this](const Viewport& vp) { initRenderTarget(vp.extent); });
         auto viewport = transport->getViewport();
         initRenderTarget(viewport.extent);
+        layout_error_widget = std::make_shared<LayoutErrorWidget>();
     }
 
     void TerminalRenderer::initRenderTarget(const IVec2& extent)
@@ -50,5 +58,51 @@ namespace TerminalRenderer
     TargetActuator TerminalRenderer::getTopLevelActuator()
     {
         return {render_target, {.origin = {0, 0}, .extent = render_target->getExtent()}};
+    }
+
+    void TerminalRenderer::startWidgets() const
+    {
+        for (const auto& widget : widgets)
+        {
+            widget->onStart();
+        }
+    }
+
+    void TerminalRenderer::updateWidgets() const
+    {
+        for (const auto& widget : widgets)
+        {
+            widget->onUpdate();
+        }
+    }
+
+    void TerminalRenderer::collectWidgets(const RenderNodeHandle& node)
+    {
+        if (node == nullptr)
+        {
+            return;
+        }
+
+        if (const auto widget = std::dynamic_pointer_cast<Widget>(node))
+        {
+            widgets.push_back(widget);
+            collectWidgets(widget->getRoot());
+            return;
+        }
+
+        if (const auto container = std::dynamic_pointer_cast<ContainerNode>(node))
+        {
+            collectWidgets(container->getChild());
+            return;
+        }
+
+        if (const auto group = std::dynamic_pointer_cast<GroupNode>(node))
+        {
+            for (const auto& child : group->getChildren())
+            {
+                collectWidgets(child);
+            }
+            return;
+        }
     }
 } // namespace TerminalRenderer

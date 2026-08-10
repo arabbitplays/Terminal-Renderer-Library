@@ -2,7 +2,5 @@
 
 
 src += files(
-  'RendererBuilder.cpp',
-  'SceneBuilder.cpp',
-  'SceneExample.cpp',
+  'Utf8Util.cpp',
 )

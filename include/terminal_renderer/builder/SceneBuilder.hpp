@@ -5,19 +5,19 @@
 #include <optional>
 #include <string>
 #include <terminal_renderer/model/color/StandardColor.hpp>
-#include <terminal_renderer/nodes/border_node/ContainerLayoutOptions.hpp>
 #include <terminal_renderer/nodes/ContainerNode.hpp>
 #include <terminal_renderer/nodes/GroupNode.hpp>
 #include <terminal_renderer/nodes/LeafNode.hpp>
+#include <terminal_renderer/nodes/border_node/BorderNode.hpp>
+#include <terminal_renderer/nodes/border_node/ContainerLayoutOptions.hpp>
+#include <terminal_renderer/nodes/layouts/LayoutNode.hpp>
 #include <terminal_renderer/nodes/text_node/TextFlowMode.hpp>
 #include <terminal_renderer/nodes/text_node/TextLayoutOptions.hpp>
+#include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <utility>
 
 namespace TerminalRenderer
 {
-    class TextNode;
-    class BorderNode;
-    class LayoutNode;
 
     template <typename T> class LeafBuilder
     {
@@ -91,6 +91,7 @@ namespace TerminalRenderer
             const std::optional<ColorHandle>& fg_color = std::nullopt,
             const std::optional<ColorHandle>& bg_color = std::nullopt,
             TextLayoutOptions layout_options = TextLayoutOptions::createDefault());
+        static LeafBuilder<TextNode> text(TextLayoutOptions layout_options);
 
         static ContainerBuilder<BorderNode> container(uint32_t margin = 0, uint32_t padding = 0,
             ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());
@@ -108,6 +109,8 @@ namespace TerminalRenderer
 
         static GroupBuilder<LayoutNode> horizontalLayout();
         static GroupBuilder<LayoutNode> verticalLayout();
+
+        static GroupBuilder<LayoutNode> scene();
     };
 } // namespace TerminalRenderer
 

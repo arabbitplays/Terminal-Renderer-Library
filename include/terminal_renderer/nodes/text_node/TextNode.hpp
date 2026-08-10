@@ -26,7 +26,7 @@ namespace TerminalRenderer
 
     private:
         void renderSegment(IVec2& curr_pos, const TextSegment& text_segment, TargetActuator& target_actuator);
-        void renderLine(IVec2& curr_pos, Cell& cell, const std::string& line, TargetActuator& target_actuator);
+        void renderLine(IVec2& curr_pos, Cell& cell, const std::string& line, TargetActuator& target_actuator) const;
         static void renderWord(IVec2& curr_pos, Cell& cell, std::string word, TargetActuator& target_actuator);
 
         static std::vector<std::string> splitTextAt(const std::string& text, char c);

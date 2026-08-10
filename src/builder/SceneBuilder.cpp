@@ -17,6 +17,11 @@ namespace TerminalRenderer
         return LeafBuilder<TextNode>{text_node};
     }
 
+    LeafBuilder<TextNode> SceneBuilder::text(TextLayoutOptions layout_options)
+    {
+        return LeafBuilder<TextNode>{std::make_shared<TextNode>(layout_options)};
+    }
+
     static std::shared_ptr<BorderNode> makeBorder(const BorderCharSet& char_set, uint32_t margin, uint32_t padding,
         ContainerLayoutOptions layout_options, bool draw_border = true)
     {
@@ -68,5 +73,10 @@ namespace TerminalRenderer
     GroupBuilder<LayoutNode> SceneBuilder::verticalLayout()
     {
         return GroupBuilder<LayoutNode>{std::make_shared<LayoutNode>(Axis::Vertical)};
+    }
+
+    GroupBuilder<LayoutNode> SceneBuilder::scene()
+    {
+        return verticalLayout();
     }
 } // namespace TerminalRenderer

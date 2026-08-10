@@ -27,6 +27,8 @@ namespace TerminalRenderer
     protected:
         std::vector<RenderNodeHandle> children;
     };
+
+    using GroupHandle = std::shared_ptr<GroupNode>;
 } // namespace TerminalRenderer
 
 #endif // TERMINAL_RENDERER_LIBRARY_GROUPNODE_HPP
