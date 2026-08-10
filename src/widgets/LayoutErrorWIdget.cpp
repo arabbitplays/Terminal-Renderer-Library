@@ -8,9 +8,9 @@ namespace TerminalRenderer
 {
     LayoutErrorWidget::LayoutErrorWidget()
     {
-        error_text = SceneBuilder::text({.flow_mode = TextFlowMode::STATIC}).build();
+        error_text = SceneBuilder::text({.flow_mode = TextFlowMode::LINE_BREAK}).build();
         root = SceneBuilder::scene()
-                   .addChild(SceneBuilder::roundedBorder(0, 1, {.scaling_mode = STATIC}).setChild(error_text).build())
+                   .addChild(SceneBuilder::container().setChild(error_text).build())
                    .build();
     }
 
@@ -19,7 +19,7 @@ namespace TerminalRenderer
         if (!updated)
         {
             updated = true;
-            error_text->appendTextSegment("Test error", StandardColor::create(BLACK), StandardColor::create(RED));
+            error_text->appendTextSegment("Window to small", StandardColor::create(RED));
         }
     }
 } // namespace TerminalRenderer

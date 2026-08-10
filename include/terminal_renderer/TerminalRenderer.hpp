@@ -8,6 +8,8 @@
 #include <terminal_renderer/transport/TerminalTransport.hpp>
 #include <terminal_renderer/widgets/Widget.hpp>
 
+#include "widgets/LayoutErrorWidget.hpp"
+
 namespace TerminalRenderer
 {
     class TerminalRenderer
@@ -36,6 +38,8 @@ namespace TerminalRenderer
 
         RenderNodeHandle root_node;
         std::vector<WidgetHandle> widgets;
+
+        std::shared_ptr<LayoutErrorWidget> layout_error_widget;
     };
 
     using RendererHandle = std::shared_ptr<TerminalRenderer>;

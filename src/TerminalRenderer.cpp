@@ -22,7 +22,16 @@ namespace TerminalRenderer
         TargetActuator actuator = getTopLevelActuator();
 
         updateWidgets();
-        root_node->render(actuator);
+
+        try
+        {
+            root_node->render(actuator);
+        }
+        catch (LayoutException& layout_exception)
+        {
+            layout_error_widget->onUpdate();
+            layout_error_widget->render(actuator);
+        }
 
         blitter.blit(render_target);
     }
@@ -38,6 +47,7 @@ namespace TerminalRenderer
         transport->setResizeCallback([this](const Viewport& vp) { initRenderTarget(vp.extent); });
         auto viewport = transport->getViewport();
         initRenderTarget(viewport.extent);
+        layout_error_widget = std::make_shared<LayoutErrorWidget>();
     }
 
     void TerminalRenderer::initRenderTarget(const IVec2& extent)
