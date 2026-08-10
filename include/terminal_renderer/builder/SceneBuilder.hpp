@@ -5,19 +5,19 @@
 #include <optional>
 #include <string>
 #include <terminal_renderer/model/color/StandardColor.hpp>
-#include <terminal_renderer/nodes/border_node/ContainerLayoutOptions.hpp>
 #include <terminal_renderer/nodes/ContainerNode.hpp>
 #include <terminal_renderer/nodes/GroupNode.hpp>
 #include <terminal_renderer/nodes/LeafNode.hpp>
+#include <terminal_renderer/nodes/border_node/BorderNode.hpp>
+#include <terminal_renderer/nodes/border_node/ContainerLayoutOptions.hpp>
+#include <terminal_renderer/nodes/layouts/LayoutNode.hpp>
 #include <terminal_renderer/nodes/text_node/TextFlowMode.hpp>
 #include <terminal_renderer/nodes/text_node/TextLayoutOptions.hpp>
+#include <terminal_renderer/nodes/text_node/TextNode.hpp>
 #include <utility>
 
 namespace TerminalRenderer
 {
-    class TextNode;
-    class BorderNode;
-    class LayoutNode;
 
     template <typename T> class LeafBuilder
     {
