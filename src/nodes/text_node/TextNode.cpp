@@ -40,7 +40,8 @@ namespace TerminalRenderer
         }
     }
 
-    void TextNode::renderLine(IVec2& curr_pos, Cell& cell, const std::string& line, TargetActuator& target_actuator)
+    void TextNode::renderLine(
+        IVec2& curr_pos, Cell& cell, const std::string& line, TargetActuator& target_actuator) const
     {
         IVec2 extent = target_actuator.getExtent();
         std::vector<std::string> words = splitTextAt(line, ' ');

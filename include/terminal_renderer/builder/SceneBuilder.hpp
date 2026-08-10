@@ -94,7 +94,7 @@ namespace TerminalRenderer
         static LeafBuilder<TextNode> text(TextLayoutOptions layout_options);
 
         static ContainerBuilder<BorderNode> container(uint32_t margin = 0, uint32_t padding = 0,
-                                                      ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());
+            ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());
 
         static ContainerBuilder<BorderNode> lightBorder(uint32_t margin = 0, uint32_t padding = 0,
             ContainerLayoutOptions layout_options = ContainerLayoutOptions::createDefault());

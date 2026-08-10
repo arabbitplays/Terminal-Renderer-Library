@@ -1,7 +1,7 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_LAYOUTERRORWIDGET_HPP
 #define TERMINAL_RENDERER_LIBRARY_LAYOUTERRORWIDGET_HPP
-#include "Widget.hpp"
-#include "terminal_renderer/nodes/text_node/TextNode.hpp"
+#include <terminal_renderer/nodes/text_node/TextNode.hpp>
+#include <terminal_renderer/widgets/Widget.hpp>
 
 namespace TerminalRenderer
 {
@@ -16,6 +16,6 @@ namespace TerminalRenderer
         std::shared_ptr<TextNode> error_text;
         bool updated = false;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_LAYOUTERRORWIDGET_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_LAYOUTERRORWIDGET_HPP

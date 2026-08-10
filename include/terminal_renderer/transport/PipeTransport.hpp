@@ -1,7 +1,7 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_PIPETRANSPORT_HPP
 #define TERMINAL_RENDERER_LIBRARY_PIPETRANSPORT_HPP
-#include "FifoPipe.hpp"
-#include "TerminalTransport.hpp"
+#include <terminal_renderer/transport/FifoPipe.hpp>
+#include <terminal_renderer/transport/TerminalTransport.hpp>
 
 namespace TerminalRenderer
 {

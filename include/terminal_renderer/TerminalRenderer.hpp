@@ -1,14 +1,12 @@
 #ifndef YAKSHA_TERMINALRENDERER_HPP
 #define YAKSHA_TERMINALRENDERER_HPP
-#include "transport/TerminalTransport.hpp"
-
 #include <memory>
-#include <terminal_renderer/nodes/RenderNode.hpp>
 #include <terminal_renderer/model/RenderTarget.hpp>
+#include <terminal_renderer/nodes/RenderNode.hpp>
 #include <terminal_renderer/rendering/TargetActuator.hpp>
 #include <terminal_renderer/rendering/TargetBlitter.hpp>
-
-#include "widgets/Widget.hpp"
+#include <terminal_renderer/transport/TerminalTransport.hpp>
+#include <terminal_renderer/widgets/Widget.hpp>
 
 namespace TerminalRenderer
 {

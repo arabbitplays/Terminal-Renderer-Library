@@ -1,31 +1,29 @@
 #include <terminal_renderer/builder/RendererBuilder.hpp>
-
-#include <terminal_renderer/transport/StdOutTransport.hpp>
 #include <terminal_renderer/TerminalRenderer.hpp>
+#include <terminal_renderer/transport/StdOutTransport.hpp>
 
 namespace TerminalRenderer
 {
-    RendererBuilder::RendererBuilder() : _transport(std::make_shared<StdOutTransport>())
+    RendererBuilder::RendererBuilder() : transport_handle(std::make_shared<StdOutTransport>())
     {
-
     }
 
     RendererHandle RendererBuilder::build()
     {
-        auto renderer = std::make_shared<TerminalRenderer>(_transport);
-        renderer->setRootNode(_root_node);
+        auto renderer = std::make_shared<TerminalRenderer>(transport_handle);
+        renderer->setRootNode(root_node_handle);
         return renderer;
     }
 
-    RendererBuilder& RendererBuilder::transport(const TransportHandle& transport)
+    RendererBuilder& RendererBuilder::transport(const TransportHandle& new_transport)
     {
-        _transport = transport;
+        transport_handle = new_transport;
         return *this;
     }
 
-    RendererBuilder& RendererBuilder::scene(const RenderNodeHandle& root_node)
+    RendererBuilder& RendererBuilder::scene(const RenderNodeHandle& new_root_node)
     {
-        _root_node = root_node;
+        root_node_handle = new_root_node;
         return *this;
     }
-} // TerminalRenderer
+} // namespace TerminalRenderer

@@ -1,7 +1,7 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_RENDERERBUILDER_H
 #define TERMINAL_RENDERER_LIBRARY_RENDERERBUILDER_H
-#include "terminal_renderer/TerminalRenderer.hpp"
-#include "terminal_renderer/nodes/RenderNode.hpp"
+#include <terminal_renderer/nodes/RenderNode.hpp>
+#include <terminal_renderer/TerminalRenderer.hpp>
 
 namespace TerminalRenderer
 {
@@ -13,13 +13,13 @@ namespace TerminalRenderer
 
         RendererHandle build();
 
-        RendererBuilder& transport(const TransportHandle& transport);
-        RendererBuilder& scene(const RenderNodeHandle& root_node);
+        RendererBuilder& transport(const TransportHandle& new_transport);
+        RendererBuilder& scene(const RenderNodeHandle& new_root_node);
 
     private:
-        TransportHandle _transport;
-        RenderNodeHandle _root_node;
+        TransportHandle transport_handle;
+        RenderNodeHandle root_node_handle;
     };
-} // TerminalRenderer
+} // namespace TerminalRenderer
 
-#endif //TERMINAL_RENDERER_LIBRARY_RENDERERBUILDER_H
+#endif // TERMINAL_RENDERER_LIBRARY_RENDERERBUILDER_H

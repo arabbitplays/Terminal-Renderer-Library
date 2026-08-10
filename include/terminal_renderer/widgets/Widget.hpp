@@ -1,6 +1,6 @@
 #ifndef TERMINAL_RENDERER_LIBRARY_WIDGET_HPP
 #define TERMINAL_RENDERER_LIBRARY_WIDGET_HPP
-#include "terminal_renderer/nodes/RenderNode.hpp"
+#include <terminal_renderer/nodes/RenderNode.hpp>
 
 namespace TerminalRenderer
 {
@@ -37,7 +37,6 @@ namespace TerminalRenderer
     };
 
     using WidgetHandle = std::shared_ptr<Widget>;
-}
+} // namespace TerminalRenderer
 
-
-#endif //TERMINAL_RENDERER_LIBRARY_WIDGET_HPP
+#endif // TERMINAL_RENDERER_LIBRARY_WIDGET_HPP
