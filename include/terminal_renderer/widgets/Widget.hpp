@@ -10,7 +10,7 @@ namespace TerminalRenderer
         virtual void onStart() {}
         virtual void onUpdate() {}
 
-        void render(TargetActuator& target_actuator) override
+        void render(TargetActuator& target_actuator) final
         {
             if (root == nullptr)
             {
@@ -19,7 +19,7 @@ namespace TerminalRenderer
             root->render(target_actuator);
         }
 
-        LayoutInfo getLayoutInfo() override
+        LayoutInfo getLayoutInfo() final
         {
             if (root == nullptr)
             {
