@@ -12,12 +12,19 @@ namespace TerminalRenderer
 
     void TextNode::render(TargetActuator& target_actuator)
     {
+        if (clear_view)
+        {
+            clearView(target_actuator);
+            clear_view = false;
+        }
+
         IVec2 pos = IVec2::zero;
         for (const auto& segment : text_segments)
         {
             renderSegment(pos, segment, target_actuator);
         }
     }
+
 
     void TextNode::renderSegment(IVec2& curr_pos, const TextSegment& text_segment, TargetActuator& target_actuator)
     {
@@ -102,6 +109,19 @@ namespace TerminalRenderer
     void TextNode::clearTextSegments()
     {
         text_segments.clear();
+        clear_view = true;
+    }
+
+    void TextNode::clearView(TargetActuator& target_actuator)
+    {
+        IVec2 extent = target_actuator.getExtent();
+        for (int32_t x = 0; x < extent.x; x++)
+        {
+            for (int32_t y = 0; y < extent.y; y++)
+            {
+                target_actuator.setCell({x, y}, {});
+            }
+        }
     }
 
     std::vector<std::string> TextNode::splitTextAt(const std::string& text, char c)
