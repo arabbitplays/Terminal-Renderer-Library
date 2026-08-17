@@ -116,11 +116,11 @@ namespace TerminalRenderer
             .addChild(SceneBuilder::text("Bright CYAN", StandardColor::create(CYAN, true)).build())
             .addChild(SceneBuilder::text("Bright WHITE", StandardColor::create(WHITE, true)).build())
 
-            .addChild(SceneBuilder::text("RGB pure white", RgbColor::create(5, 5, 5)).build())
-            .addChild(SceneBuilder::text("RGB pure red", RgbColor::create(5, 0, 0)).build())
-            .addChild(SceneBuilder::text("RGB pure green", RgbColor::create(0, 5, 0)).build())
-            .addChild(SceneBuilder::text("RGB pure blue", RgbColor::create(0, 0, 5)).build())
-            .addChild(SceneBuilder::text("RGB pure black", RgbColor::create(0, 0, 0)).build())
+            .addChild(SceneBuilder::text("RGB pure white", RgbColor::create({1.0f, 1.0f, 1.0f})).build())
+            .addChild(SceneBuilder::text("RGB pure red", RgbColor::create({1.0f, 0.0f, 0.0f})).build())
+            .addChild(SceneBuilder::text("RGB pure green", RgbColor::create({0.0f, 1.0f, 0.0f})).build())
+            .addChild(SceneBuilder::text("RGB pure blue", RgbColor::create({0.0f, 0.0f, 1.0f})).build())
+            .addChild(SceneBuilder::text("RGB pure black", RgbColor::create({0.0f, 0.0f, 0.0f})).build())
 
             .addChild(SceneBuilder::text("Palette index 0", PaletteColor::create(0)).build())
             .addChild(SceneBuilder::text("Palette index 1", PaletteColor::create(1)).build())

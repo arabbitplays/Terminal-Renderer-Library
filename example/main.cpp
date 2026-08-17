@@ -6,7 +6,7 @@
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char* argv[])
 {
-    auto scene = TerminalRenderer::SceneExample::textTestScene();
+    auto scene = TerminalRenderer::SceneExample::colorTestScene();
     auto renderer = TerminalRenderer::RendererBuilder().scene(scene).build();
     while (true)
     {
