@@ -3,6 +3,7 @@
 
 src += files(
   'FifoPipe.cpp',
+  'InputHandler.cpp',
   'PipeTransport.cpp',
   'StdOutTransport.cpp',
 )

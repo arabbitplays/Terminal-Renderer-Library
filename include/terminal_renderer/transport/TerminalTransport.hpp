@@ -18,6 +18,8 @@ namespace TerminalRenderer
 
         virtual void setResizeCallback(ResizeCallback callback) = 0;
         virtual void pollEvents() = 0;
+
+        virtual int readKey() = 0;
     };
 
     using TransportHandle = std::shared_ptr<TerminalTransport>;

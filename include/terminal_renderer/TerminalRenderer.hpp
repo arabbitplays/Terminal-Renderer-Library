@@ -1,5 +1,8 @@
 #ifndef YAKSHA_TERMINALRENDERER_HPP
 #define YAKSHA_TERMINALRENDERER_HPP
+#include <terminal_renderer/transport/InputHandler.hpp>
+#include <terminal_renderer/widgets/LayoutErrorWidget.hpp>
+
 #include <memory>
 #include <terminal_renderer/model/RenderTarget.hpp>
 #include <terminal_renderer/nodes/RenderNode.hpp>
@@ -7,8 +10,6 @@
 #include <terminal_renderer/rendering/TargetBlitter.hpp>
 #include <terminal_renderer/transport/TerminalTransport.hpp>
 #include <terminal_renderer/widgets/Widget.hpp>
-
-#include "widgets/LayoutErrorWidget.hpp"
 
 namespace TerminalRenderer
 {
@@ -22,6 +23,8 @@ namespace TerminalRenderer
         void render();
         void setRootNode(const RenderNodeHandle& root_node);
 
+        std::shared_ptr<InputHandler> getInputHandler();
+
     private:
         void init();
         void initRenderTarget(const IVec2& extent);
@@ -33,6 +36,7 @@ namespace TerminalRenderer
 
         TransportHandle transport;
         TargetBlitter blitter;
+        std::shared_ptr<InputHandler> input_handler;
 
         RenderTargetHandle render_target;
 

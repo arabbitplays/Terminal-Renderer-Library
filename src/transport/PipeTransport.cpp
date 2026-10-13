@@ -75,4 +75,9 @@ namespace TerminalRenderer
         }
         return {.origin = {0, 0}, .extent = {0, 0}};
     }
+
+    int PipeTransport::readKey()
+    {
+        throw std::runtime_error("Pipe transport does not support input reading");
+    }
 } // namespace TerminalRenderer

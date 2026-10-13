@@ -34,12 +34,18 @@ namespace TerminalRenderer
         }
 
         blitter.blit(render_target);
+
+        input_handler->clearKeys();
     }
 
     void TerminalRenderer::setRootNode(const RenderNodeHandle& root_node)
     {
         this->root_node = root_node;
         collectWidgets(root_node);
+    }
+    std::shared_ptr<InputHandler> TerminalRenderer::getInputHandler()
+    {
+        return input_handler;
     }
 
     void TerminalRenderer::init()
@@ -48,6 +54,8 @@ namespace TerminalRenderer
         auto viewport = transport->getViewport();
         initRenderTarget(viewport.extent);
         layout_error_widget = std::make_shared<LayoutErrorWidget>();
+
+         input_handler = std::make_shared<InputHandler>(transport);
     }
 
     void TerminalRenderer::initRenderTarget(const IVec2& extent)

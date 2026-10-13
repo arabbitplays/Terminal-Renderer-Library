@@ -19,6 +19,7 @@ namespace TerminalRenderer
 
     private:
         Viewport queryViewport() const;
+        int readKey();
 
         FifoPipeHandle pipe;
         std::string tty_path;
